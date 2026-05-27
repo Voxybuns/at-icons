@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5rqe2pw560cg"
-path="res://.godot/imported/radioactive_symboil.svg-5c5823e08c00a7943944bec744ef053e.ctex"
+uid="uid://daheo0tpwdffd"
+path="res://.godot/imported/radioactive_symbol.svg-45555b8770f41dbf38323f85ab1e03c0.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/at-icons/node3d/radioactive_symboil.svg"
-dest_files=["res://.godot/imported/radioactive_symboil.svg-5c5823e08c00a7943944bec744ef053e.ctex"]
+source_file="res://addons/at-icons/control/radioactive_symbol.svg"
+dest_files=["res://.godot/imported/radioactive_symbol.svg-45555b8770f41dbf38323f85ab1e03c0.ctex"]
 
 [params]
 

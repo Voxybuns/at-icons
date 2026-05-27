@@ -1,5 +1,4 @@
 ---
-title: "Home"
 ---
 
 <!DOCTYPE html>
@@ -7,10 +6,21 @@ title: "Home"
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>@icons picker — icons for custom Godot nodes</title>
+    <link rel="shortcut icon" href="data:image/svg+xml,%3Csvg width='512' height='512' viewBox='0 0 512 512' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 256C0 89.6 89.6 0 256 0C422.4 0 512 89.6 512 256C512 422.4 422.4 512 256 512C89.6 512 0 422.4 0 256Z' fill='%23FFD900'/%3E%3Cpath d='M281.139 96C303.115 96 322.427 99.5408 339.076 106.622C355.946 113.483 369.154 122.999 378.699 135.17C388.466 147.12 395.791 160.398 400.675 175.004C405.558 189.61 408 205.212 408 221.809C408 259.43 400.453 287.425 385.358 305.793C370.264 323.939 351.395 333.012 328.754 333.012C305.89 333.012 292.793 323.939 289.463 305.793H288.464C275.146 322.611 257.942 331.021 236.854 331.021C219.54 331.021 205.888 325.046 195.899 313.095C186.132 300.924 181.249 285.101 181.249 265.627C181.249 242.39 188.019 223.026 201.56 207.535C215.322 191.823 232.415 183.967 252.837 183.967C276.367 183.967 291.683 193.151 298.786 211.519H299.452L300.118 204.216C301.45 191.602 306.667 185.295 315.768 185.295C320.429 185.295 323.759 186.844 325.757 189.942C327.977 192.819 328.865 196.36 328.421 200.564L320.762 276.249C319.874 285.322 320.54 291.74 322.76 295.502C324.98 299.264 329.198 301.145 335.413 301.145C346.29 301.145 355.835 294.064 364.048 279.9C372.261 265.516 376.368 246.816 376.368 223.801C376.368 194.368 368.155 170.689 351.728 152.763C335.302 134.617 310.662 125.544 277.809 125.544C235.633 125.544 201.338 139.043 174.922 166.041C148.729 193.04 135.632 229.001 135.632 273.925C135.632 309.555 145.399 337.217 164.933 356.913C184.689 376.609 211.993 386.456 246.843 386.456C256.832 386.456 267.376 384.907 278.475 381.809C289.574 378.711 295.901 377.162 297.455 377.162C301.45 377.162 304.558 378.379 306.778 380.813C308.997 383.469 310.107 386.678 310.107 390.44C310.107 397.521 306.223 402.943 298.453 406.705C286.689 412.902 268.93 416 245.179 416C200.339 416 165.599 402.943 140.959 376.83C116.32 350.938 104 316.747 104 274.257C104 220.924 120.093 177.881 152.28 145.129C184.689 112.376 227.642 96 281.139 96ZM290.462 249.693C290.462 237.079 287.465 227.563 281.472 221.145C275.701 214.506 267.487 211.187 256.832 211.187C245.068 211.187 235.078 216.277 226.865 226.456C218.874 236.415 214.878 248.918 214.878 263.967C214.878 275.917 217.764 285.654 223.536 293.178C229.307 300.481 237.298 304.133 247.509 304.133C259.718 304.133 269.929 299.154 278.142 289.195C286.356 279.015 290.462 265.848 290.462 249.693Z' fill='black'/%3E%3C/svg%3E%0A" type="image/x-icon">
 </head>
 
 <style>
+    @keyframes fade-in {
+        from {bottom: 0; opacity: 0;}
+        to {bottom: 1rem; opacity: 1;}
+    }
+
+    @keyframes fade-out {
+        from {bottom: 1rem; opacity: 1;}
+        to {bottom: 0; opacity: 0;}
+    }
+
     :root {
         --color-node_dark: #E0E0E0;
         --color-node_light: #5A5A5A;
@@ -28,20 +38,72 @@ title: "Home"
 
         --icon-fill: var(--icon-fill_dark);
 
+        --color-black: #000000;
+        --color-darker: #0A0A0D;
+        --color-dark: #141416;
+        --color-light: #E3DED2;
+        --color-lighter: #EFEEE9;
+        --color-white: #ffffff;
+        --color-accent: #FFD900;
+
         font-family: sans-serif;
     }
+
     * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
     }
 
-    main {
+    body {
         display: grid;
-        grid-template-columns: auto 1024px auto;
-        & > * {
-            grid-column: 2;
+        grid-template-columns: 20rem 1fr;
+        grid-template-rows: auto 1fr;
+        grid-template-areas:
+        "header header"
+        "aside main"
+        ;
+        background: var(--color-black);
+        color: var(--color-light);
+    }
+
+    header {
+        grid-area: header;
+        position: sticky;
+        top: 0;
+        block-size: 4.5rem;
+        padding: 1rem;
+        background: var(--color-dark);
+        border-block-end: 1px solid rgba(255, 255, 255, 0.15);
+        z-index: 999;
+        & nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            block-size: 100%;
         }
+    }
+
+    aside {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-self: flex-start;
+        grid-area: aside;
+        position: sticky;
+        top: 4.5rem;
+        block-size: calc(100vh - 4.5rem);
+        padding-inline: 1rem;
+        padding-block: 1rem;
+        background: var(--color-darker);
+        border-inline-end: 1px solid rgba(255, 255, 255, 0.15);
+        z-index: 998;
+    }
+
+    main {
+        grid-area: main;
+        padding-inline: 1rem;
+        padding-block: 1rem;
     }
 
     .icon-grid {
@@ -55,12 +117,13 @@ title: "Home"
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr;
         grid-template-areas:
-            "icon-dark icon-light"
+        "icon-dark icon-light"
         ;
-        border-radius: 1rem;
-        overflow: hidden;
         anchor-scope: all;
         anchor-name: --tooltip-anchor;
+        overflow: hidden;
+        border-radius: 1rem;
+        cursor: pointer;
 
         & div {
             display: flex;
@@ -69,59 +132,60 @@ title: "Home"
             gap: 0.5rem;
             padding-block: 1rem;
         }
+
         & div.display-dark {
             grid-area: icon-dark;
             background: var(--icon-background_dark);
             --icon-fill: var(--icon-fill_dark);
         }
+
         & div.display-light {
             grid-area: icon-light;
             background: var(--icon-background_light);
             --icon-fill: var(--icon-fill_light);
         }
+
         & p.tooltip {
             display: none;
             position: absolute;
             position-anchor: --tooltip-anchor;
             position-area: block-end center;
-            background: #8DA5F3;
-            color: black;
-            padding: 0.5rem;
             margin-block-start: -0.5rem;
+            padding: 0.5rem;
             border-radius: 0.5rem;
-            box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.2);
             font-size: 0.8rem;
+            background: var(--color-accent);
+            color: var(--color-black);
+            box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.2);
         }
+    }
+
+    svg {
+        display: block;
     }
 
     svg.icon {
         display: block;
-        color: var(--icon-fill);
-        inline-size: 1rem;
         block-size: 1rem;
+        inline-size: 1rem;
+        color: var(--icon-fill);
         &.large {
-            inline-size: 2rem;
             block-size: 2rem;
+            inline-size: 2rem;
         }
     }
 
     fieldset {
         border: none;
-        margin-block-end: 2rem;
-        & > legend {
-            font-size: 0.8rem;
-            font-weight: bold;
-            margin-block-end: 0.5rem;
-        }
         & > div {
-            border: 1px solid #ccc;
             display: grid;
-            grid-auto-flow: column;
+            grid-auto-flow: row;
             grid-auto-columns: 1fr;
-            background: #eee;
-            border-radius: 1rem;
+            inline-size: 100%;
             overflow: hidden;
-            inline-size: fit-content;
+            border-radius: 1rem;
+            background: var(--color-darker);
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
     }
 
@@ -129,27 +193,94 @@ title: "Home"
         display: none;
         & + label {
             display: block;
-            text-align: center;
-            padding-block: 1rem;
+            padding-block: 0.75rem;
             padding-inline: 2rem;
+            text-align: center;
+            cursor: pointer;
+            &:hover {
+                background: var(--color-dark);
+            }
         }
         & + label:not(:last-of-type) {
-            border-inline-end: 1px solid #ccc;
+            border-block-end: 1px solid rgba(255, 255, 255, 0.15);
         }
         &:checked + label {
-            background-color: #fff;
+            background-color: var(--color-accent);
+            color: var(--color-darker);
+            font-weight: bold;
         }
     }
-    h1 {
-        margin-block-end: 2rem;
+
+    #how-to-use, form {
+        display: block;
+        padding-inline: 1rem;
+        padding-block: 1.5rem;
+        border-radius: 2rem;
+        background: var(--color-dark);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    form {
+        padding-block-end: 1rem;
+    }
+
+    h2, fieldset legend {
+        margin-block-end: 0.5rem;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+
+    p {
+        line-height: 1.4;
+    }
+
+    code {
+        font-size: 1.25em;
+        color: var(--color-accent);
+    }
+
+    a:any-link {
+        font-weight: bold;
+        color: var(--color-accent);
+        &:hover {
+            text-decoration: underline;
+        }
+
+    }
+
+    #notification {
+        visibility: hidden;
+        position: fixed;
+        left: 50%;
+        bottom: 1rem;
+        padding: 1rem 2rem;
+        border-radius: 1rem;
+        background-color: var(--color-accent);
+        color: var(--color-dark);
+        z-index: 9999;
+        & code {
+            color: var(--color-dark);
+        }
+        &.visible {
+            visibility: visible;
+            animation: fade-in 0.5s ease, fade-out 0.5s 2.5s ease;
+        }
     }
 </style>
 
 <body>
     {% include spritesheet.html %}
 
-    <main>
-        <h1>@icons picker</h1>
+    <header>
+        <nav>
+            {% include logo.html %}
+            <p>
+                A Godot icon pack by <a href="https://voxy.space">Voxy</a> • <a href="https://github.com/voxybuns/at-icons/">GitHub</a>
+            </p>
+        </nav>
+    </header>
+    <aside>
         <form>
             <fieldset>
                 <legend>Node type</legend>
@@ -165,10 +296,15 @@ title: "Home"
                 </div>
             </fieldset>
         </form>
-
+        <section id="how-to-use">
+            <h2>How to use</h2>
+            <p>Extract the icons to your Godot project as outlined in the <a href="https://github.com/Voxybuns/at-icons/blob/main/README.md#installing">installation guide</a>. Use the picker above to select the node's color from the available choices. Click on the desired icon to copy the <code>@icon</code> annotation to your clipboard, and paste it into your node's script <strong>above</strong> the class declaration.</p>
+        </section>
+    </aside>
+    <main>
         <div class="icon-grid">
             {% for icon in site.data.icons.icons %}
-            <article class="icon-card" onmouseover="showTooltip(this)" onmouseleave="hideTooltip(this)">
+            <article class="icon-card" onmouseover="showTooltip(this)" onmouseleave="hideTooltip(this)" onclick="copyAnnotation(this)" data-icon="{{icon}}">
                 <div class="display-dark">
                     <svg class="icon large">
                         <use href="#{{icon}}"></use>
@@ -189,9 +325,15 @@ title: "Home"
             </article>
             {% endfor %}
         </div>
-
+    </main>
+    <div id="notification">
+        <p>
+            <code>@icon</code> declaration copied to your clipboard!
+        </p>
+    </div>
     <script>
         var currentNodeType = "node"
+
         function changeNodeType(radio) {
             currentNodeType = radio.value;
             const pageMain = document.getElementsByTagName("main")[0]
@@ -221,7 +363,19 @@ title: "Home"
             const tooltipElement = element.getElementsByTagName("p")[0];
             tooltipElement.style.display = "none";
         }
+
+        function copyAnnotation(item) {
+            var icon = item.dataset.icon;
+            const annotationStart = "@icon (\"res://addons/at-icons/";
+            var annotation = annotationStart.concat(currentNodeType, "/", icon, ".svg\")");
+            navigator.clipboard.writeText(annotation);
+
+            var notification = document.getElementById("notification");
+            notification.className = "visible";
+            setTimeout(function(){ 
+                notification.className = notification.className.replace("visible", ""); 
+            }, 3000);
+        }
     </script>
-    </main>
 </body>
 </html>
