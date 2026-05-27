@@ -1,0 +1,227 @@
+---
+title: "Home"
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    :root {
+        --color-node_dark: #E0E0E0;
+        --color-node_light: #5A5A5A;
+        --color-node2d_dark: #8DA5F3;
+        --color-node2d_light: #3D64DD;
+        --color-node3d_dark: #FC7F7F;
+        --color-node3d_light: #CD3838;
+        --color-control_dark: #8EEF97;
+        --color-control_light: #2FA139;
+
+        --icon-background_dark: #292929;
+        --icon-background_light: #e5e5e5;
+        --icon-fill_dark: var(--color-node_dark);
+        --icon-fill_light: var(--color-node_light);
+
+        --icon-fill: var(--icon-fill_dark);
+
+        font-family: sans-serif;
+    }
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    main {
+        display: grid;
+        grid-template-columns: auto 1024px auto;
+        & > * {
+            grid-column: 2;
+        }
+    }
+
+    .icon-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+        gap: 0.5rem;
+    }
+
+    article.icon-card {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas:
+            "icon-dark icon-light"
+        ;
+        border-radius: 1rem;
+        overflow: hidden;
+        anchor-scope: all;
+        anchor-name: --tooltip-anchor;
+
+        & div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding-block: 1rem;
+        }
+        & div.display-dark {
+            grid-area: icon-dark;
+            background: var(--icon-background_dark);
+            --icon-fill: var(--icon-fill_dark);
+        }
+        & div.display-light {
+            grid-area: icon-light;
+            background: var(--icon-background_light);
+            --icon-fill: var(--icon-fill_light);
+        }
+        & p.tooltip {
+            display: none;
+            position: absolute;
+            position-anchor: --tooltip-anchor;
+            position-area: block-end center;
+            background: #8DA5F3;
+            color: black;
+            padding: 0.5rem;
+            margin-block-start: -0.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.2);
+            font-size: 0.8rem;
+        }
+    }
+
+    svg.icon {
+        display: block;
+        color: var(--icon-fill);
+        inline-size: 1rem;
+        block-size: 1rem;
+        &.large {
+            inline-size: 2rem;
+            block-size: 2rem;
+        }
+    }
+
+    fieldset {
+        border: none;
+        margin-block-end: 2rem;
+        & > legend {
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-block-end: 0.5rem;
+        }
+        & > div {
+            border: 1px solid #ccc;
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: 1fr;
+            background: #eee;
+            border-radius: 1rem;
+            overflow: hidden;
+            inline-size: fit-content;
+        }
+    }
+
+    input[name="nodeType"] {
+        display: none;
+        & + label {
+            display: block;
+            text-align: center;
+            padding-block: 1rem;
+            padding-inline: 2rem;
+        }
+        & + label:not(:last-of-type) {
+            border-inline-end: 1px solid #ccc;
+        }
+        &:checked + label {
+            background-color: #fff;
+        }
+    }
+    h1 {
+        margin-block-end: 2rem;
+    }
+</style>
+
+<body>
+    {% include spritesheet.html %}
+
+    <main>
+        <h1>@icons picker</h1>
+        <form>
+            <fieldset>
+                <legend>Node type</legend>
+                <div>
+                    <input type="radio" onclick="changeNodeType(this)" id="typeNode" name="nodeType" value="node" checked>
+                    <label for="typeNode">Node</label>
+                    <input type="radio" onclick="changeNodeType(this)" id="typeNode2D" name="nodeType" value="node2d">
+                    <label for="typeNode2D">Node2D</label>
+                    <input type="radio" onclick="changeNodeType(this)" id="typeNode3D" name="nodeType" value="node3d">
+                    <label for="typeNode3D">Node3D</label>
+                    <input type="radio" onclick="changeNodeType(this)" id="typeControl" name="nodeType" value="control">
+                    <label for="typeControl">Control</label>
+                </div>
+            </fieldset>
+        </form>
+
+        <div class="icon-grid">
+            {% for icon in site.data.icons.icons %}
+            <article class="icon-card" onmouseover="showTooltip(this)" onmouseleave="hideTooltip(this)">
+                <div class="display-dark">
+                    <svg class="icon large">
+                        <use href="#{{icon}}"></use>
+                    </svg>
+                    <svg class="icon">
+                        <use href="#{{icon}}"></use>
+                    </svg>
+                </div>
+                <div class="display-light">
+                    <svg class="icon large">
+                        <use href="#{{icon}}"></use>
+                    </svg>
+                    <svg class="icon">
+                        <use href="#{{icon}}"></use>
+                    </svg>
+                </div>
+                <p class="tooltip">{{icon}}</p>
+            </article>
+            {% endfor %}
+        </div>
+
+    <script>
+        var currentNodeType = "node"
+        function changeNodeType(radio) {
+            currentNodeType = radio.value;
+            const pageMain = document.getElementsByTagName("main")[0]
+            if (radio.value == "node") {
+                pageMain.style.setProperty("--icon-fill_dark", "var(--color-node_dark)");
+                pageMain.style.setProperty("--icon-fill_light", "var(--color-node_light)");
+            } else if (radio.value == "node2d") {
+                pageMain.style.setProperty("--icon-fill_dark", "var(--color-node2d_dark)");
+                pageMain.style.setProperty("--icon-fill_light", "var(--color-node2d_light)");
+            } else if (radio.value == "node3d") {
+                pageMain.style.setProperty("--icon-fill_dark", "var(--color-node3d_dark)");
+                pageMain.style.setProperty("--icon-fill_light", "var(--color-node3d_light)");
+            } else if (radio.value == "control") {
+                pageMain.style.setProperty("--icon-fill_dark", "var(--color-control_dark)");
+                pageMain.style.setProperty("--icon-fill_light", "var(--color-control_light)");
+            }
+        }
+
+        function showTooltip(item) {
+            const element = item;
+            const tooltipElement = element.getElementsByTagName("p")[0];
+            tooltipElement.style.display = "block";
+        }
+
+        function hideTooltip(item) {
+            const element = item;
+            const tooltipElement = element.getElementsByTagName("p")[0];
+            tooltipElement.style.display = "none";
+        }
+    </script>
+    </main>
+</body>
+</html>
