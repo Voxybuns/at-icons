@@ -102,7 +102,7 @@
 
     main {
         grid-area: main;
-        padding-inline: 1rem;
+        padding-inline: 2rem;
         padding-block: 1rem;
     }
 
@@ -114,15 +114,12 @@
 
     article.icon-card {
         display: grid;
+        position: relative;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr;
         grid-template-areas:
         "icon-dark icon-light"
         ;
-        anchor-scope: all;
-        anchor-name: --tooltip-anchor;
-        overflow: hidden;
-        border-radius: 1rem;
         cursor: pointer;
 
         & div {
@@ -134,12 +131,14 @@
         }
 
         & div.display-dark {
+            border-radius: 1rem 0 0 1rem;
             grid-area: icon-dark;
             background: var(--icon-background_dark);
             --icon-fill: var(--icon-fill_dark);
         }
 
         & div.display-light {
+            border-radius: 0 1rem 1rem 0;
             grid-area: icon-light;
             background: var(--icon-background_light);
             --icon-fill: var(--icon-fill_light);
@@ -148,15 +147,17 @@
         & p.tooltip {
             display: none;
             position: absolute;
-            position-anchor: --tooltip-anchor;
-            position-area: block-end center;
-            margin-block-start: -0.5rem;
+            text-align: center;
+            left: 50%;
+            bottom: -1rem;
+            transform: translateX(-50%);
             padding: 0.5rem;
             border-radius: 0.5rem;
             font-size: 0.8rem;
             background: var(--color-accent);
             color: var(--color-black);
             box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.2);
+            z-index: 999;
         }
     }
 
@@ -289,9 +290,9 @@
             const listItems = document.querySelectorAll("div#icon-grid article");
 
             listItems.forEach(function(item) {
-                item.style.display = 'revert';
+                item.style.display = 'inherit';
 
-                if (!item.dataset.icon.includes(searchTerm)) {
+                if (!item.dataset.icon.includes(searchTerm.toLowerCase())) {
                     item.style.display = 'none';
                 }
             })
