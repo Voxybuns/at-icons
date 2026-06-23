@@ -18,19 +18,34 @@ Each icon is designed on a 16×16 grid, with color variants corresponding to eve
 
 ## Installing
 
+> [!CAUTION]
+> Do not install **@icons** by cloning or downloading the repository as a ZIP file, as it contains source files for the web picker which cannot be used on their own.
+
 Download the [latest release](https://github.com/voxybuns/at-icons/releases/latest) of **@icons** (also available on [itch.io](https://voxybuns.itch.io/at-icons) and the [Godot Asset Store](https://store.godotengine.org/asset/voxy/at-icons/)!), and extract it into the root of your Godot project's folder. If you wish to use the icons in your plugin or addon, you can also copy individual icons along with their respective `.import` files into your plugin's folder, along with the library's license.
 
 ## Applying custom node icons
 
-To apply an icon to a node or class, add the [`@icon` annotation](https://docs.godotengine.org/en/stable/classes/class_@gdscript.html#class-gdscript-annotation-icon) to your node's script followed by the path to the desired icon in parentheses and quotes **before** the class declaration, like so:
+To apply an icon to a node or class, add the [`@icon` annotation (GDScript)](https://docs.godotengine.org/en/stable/classes/class_@gdscript.html#class-gdscript-annotation-icon) or [icon attribute (C#)](https://docs.godotengine.org/en/stable/tutorials/scripting/c_sharp/c_sharp_global_classes.html#c-global-classes) to your node's script, followed by the path to the desired icon in parentheses and quotes **before** the class declaration, like so:
 
+**GDScript:**
 ```gdscript
 @icon ("res://addons/at-icons/node/bunny.svg")
 class_name MyNode
 extends Node
 ```
 
-Since v1.1.0, the pack comes with a companion web page you can use to quickly preview any icon and copy its annotation to your clipboard. Simply pick the desired node color on the left, and click on the icon you need to integrate!
+**C#:**
+```csharp
+using Godot;
+
+[GlobalClass, Icon("res://addons/at-icons/node/bunny.svg")]
+public partial class MyNode : Node
+{
+    ...
+}
+```
+
+Since v1.1.0, the pack comes with a companion web page you can use to quickly preview any icon and copy its annotation to your clipboard. Simply pick the desired node color and language on the left, and click on the icon you need to integrate!
 
 You might need to close and open the scene again for the icon change to occur.
 

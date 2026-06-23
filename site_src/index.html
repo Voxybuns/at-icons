@@ -98,12 +98,13 @@
         background: var(--color-darker);
         border-inline-end: 1px solid rgba(255, 255, 255, 0.15);
         z-index: 998;
+        overflow-y: scroll;
     }
 
     main {
         grid-area: main;
         padding-inline: 2rem;
-        padding-block: 1rem;
+        padding-block-end: 1rem;
     }
 
     .icon-grid {
@@ -191,7 +192,11 @@
     }
 
     .searchbar-holder {
-        padding-block-end: 1rem;
+        padding-block: 1rem;
+        background-color: var(--color-darker);
+        position: sticky;
+        top: 4.5rem;
+        z-index: 10;
     }
 
     input#searchbar {
@@ -203,7 +208,7 @@
         border-radius: 1rem;
     }
 
-    input[name="nodeType"] {
+    input[name="nodeType"], input[name="annotationType"] {
         display: none;
         & + label {
             display: block;
@@ -232,6 +237,9 @@
         border-radius: 2rem;
         background: var(--color-dark);
         border: 1px solid rgba(255, 255, 255, 0.15);
+        > * + * {
+            margin-block-start: 1rem;
+        }
     }
 
     form {
@@ -290,10 +298,14 @@
             const listItems = document.querySelectorAll("div#icon-grid article");
 
             listItems.forEach(function(item) {
-                item.style.display = 'inherit';
+                var iconItem = item;
+                iconItem.style.display = 'inherit';
 
-                if (!item.dataset.icon.includes(searchTerm.toLowerCase())) {
-                    item.style.display = 'none';
+                var aliases = item.dataset.aliases;
+                var aliasesString = aliases.concat(", ", item.dataset.icon)
+
+                if (!aliasesString.includes(searchTerm.toLowerCase())) {
+                    iconItem.style.display = 'none';
                 }
             })
         }
@@ -323,10 +335,20 @@
                     <label for="typeControl">Control</label>
                 </div>
             </fieldset>
+            <fieldset>
+                <legend>Annotation language</legend>
+                <div>
+                    <input type="radio" onclick="changeAnnotationType(this)" id="annotationGDScript" name="annotationType" value="gdscript" checked>
+                    <label for="annotationGDScript">GDScript</label>
+                    <input type="radio" onclick="changeAnnotationType(this)" id="annotationCSharp" name="annotationType" value="csharp">
+                    <label for="annotationCSharp">C#</label>
+                </div>
+            </fieldset>
         </form>
         <section id="how-to-use">
             <h2>How to use</h2>
-            <p>Extract the icons to your Godot project as outlined in the <a href="https://github.com/Voxybuns/at-icons/blob/main/README.md#installing">installation guide</a>. Use the picker above to select the node's color from the available choices. Click on the desired icon to copy the <code>@icon</code> annotation to your clipboard, and paste it into your node's script <strong>above</strong> the class declaration.</p>
+            <p>Extract the icons to your Godot project as outlined in the <a href="https://github.com/Voxybuns/at-icons/blob/main/README.md#installing">installation guide</a></p>
+            <p>Pick the node type color and programming language of your choice using the options above, then click on the desired icon to copy the icon annotation to your clipboard, and paste it into your node's script <strong>above</strong> the class declaration.</p>
         </section>
     </aside>
     <main>
@@ -334,25 +356,26 @@
             <input id="searchbar" type="search" placeholder="Search icons..." oninput="filterByName(event)">
         </div>
         <div class="icon-grid" id="icon-grid">
-            {% for icon in site.data.icons.icons %}
-            <article class="icon-card" onmouseover="showTooltip(this)" onmouseleave="hideTooltip(this)" onclick="copyAnnotation(this)" data-icon="{{icon}}">
+            {% assign sorted_icons = site.data.icons | sort %}
+            {% for icon in sorted_icons %}
+            <article class="icon-card" onmouseover="showTooltip(this)" onmouseleave="hideTooltip(this)" onclick="copyAnnotation(this)" data-icon="{{icon[0]}}" data-aliases="{{ icon[1].description }}">
                 <div class="display-dark">
                     <svg class="icon large">
-                        <use href="#{{icon}}"></use>
+                        <use href="#{{icon[0]}}"></use>
                     </svg>
                     <svg class="icon">
-                        <use href="#{{icon}}"></use>
+                        <use href="#{{icon[0]}}"></use>
                     </svg>
                 </div>
                 <div class="display-light">
                     <svg class="icon large">
-                        <use href="#{{icon}}"></use>
+                        <use href="#{{icon[0]}}"></use>
                     </svg>
                     <svg class="icon">
-                        <use href="#{{icon}}"></use>
+                        <use href="#{{icon[0]}}"></use>
                     </svg>
                 </div>
-                <p class="tooltip">{{icon}}</p>
+                <p class="tooltip">{{icon[0]}}</p>
             </article>
             {% endfor %}
         </div>
@@ -363,7 +386,12 @@
         </p>
     </div>
     <script>
-        var currentNodeType = "node"
+        var currentNodeType = "node";
+        var currentAnnotationType = "gdscript";
+
+        function changeAnnotationType(radio) {
+            currentAnnotationType = radio.value;
+        }
 
         function changeNodeType(radio) {
             currentNodeType = radio.value;
@@ -397,9 +425,16 @@
 
         function copyAnnotation(item) {
             var icon = item.dataset.icon;
+            const cSharpAnnotationStart = "[GlobalClass, Icon(\"res://addons/at-icons/"
             const annotationStart = "@icon (\"res://addons/at-icons/";
-            var annotation = annotationStart.concat(currentNodeType, "/", icon, ".svg\")");
-            navigator.clipboard.writeText(annotation);
+            if (currentAnnotationType == "gdscript") {
+                var annotation = annotationStart.concat(currentNodeType, "/", icon, ".svg\")");
+                navigator.clipboard.writeText(annotation);
+            } else {
+                var annotation = cSharpAnnotationStart.concat(currentNodeType, "/", icon, ".svg\")]");
+                navigator.clipboard.writeText(annotation);
+            }
+            
 
             var notification = document.getElementById("notification");
             notification.className = "visible";

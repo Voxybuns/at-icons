@@ -1,2 +1,9 @@
 to_optimize/
 releases/
+*.cmd
+.godot/
+project.godot
+icon.svg
+.editorconfig
+icon.svg.import
+docs/*.import
