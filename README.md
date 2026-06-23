@@ -8,7 +8,7 @@
     </picture>
 </p>
 
-**@icons** is a free and open-source library of 400 vector (SVG) icons you can use as custom node icons in your Godot projects or plugins, designed to fit with the existing set of editor icons, and optimized using [svgo](https://svgo.dev/).
+**@icons** is a free and open-source library of 500+ vector (SVG) icons you can use as custom node icons in your Godot projects or plugins, designed to fit with the existing set of editor icons, and optimized using [svgo](https://svgo.dev/).
 
 Each icon is designed on a 16×16 grid, with color variants corresponding to every node type. They're also configured to work with any editor theme and scaling settings out of the box!
 
