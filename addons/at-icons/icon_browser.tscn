@@ -594,7 +594,7 @@ func _ready() -> void:
 	var ticks := Time.get_ticks_usec()
 	_initialize_nodes()
 	var took := Time.get_ticks_usec() - ticks
-	prints(\"It took exactly\", took / 1_000_000.0, \"seconds to create all the buttons.\")
+	#prints(\"It took exactly\", took / 1_000_000.0, \"seconds to create all the buttons.\")
 	update()
 
 
