@@ -21,7 +21,7 @@ Each icon is designed on a 16×16 grid, with color variants corresponding to eve
 > [!CAUTION]
 > Do not install **@icons** by cloning or downloading the repository as a ZIP file, as it contains source files for the web picker which cannot be used on their own.
 
-Download the [latest release](https://github.com/voxybuns/at-icons/releases/latest) of **@icons** (also available on [itch.io](https://voxybuns.itch.io/at-icons) and the [Godot Asset Store](https://store.godotengine.org/asset/voxy/at-icons/)!), and extract it into the root of your Godot project's folder. If you wish to use the icons in your plugin or addon, you can also copy individual icons along with their respective `.import` files into your plugin's folder, along with the library's license.
+Download the [latest release](https://github.com/voxybuns/at-icons/releases/latest) of **@icons** (also available on [itch.io](https://voxybuns.itch.io/at-icons), [Godot Asset Store](https://store.godotengine.org/asset/voxy/at-icons/), and the [Godot Asset Library](https://godotengine.org/asset-library/asset/5302)), and extract it into the root of your Godot project's folder. If you wish to use the icons in your plugin or addon, you can also copy individual icons along with their respective `.import` files into your plugin's folder, along with the library's license.
 
 ## Applying custom node icons
 
@@ -45,9 +45,9 @@ public partial class MyNode : Node
 }
 ```
 
-Since v1.1.0, the pack comes with a companion web page you can use to quickly preview any icon and copy its annotation to your clipboard. Simply pick the desired node color and language on the left, and click on the icon you need to integrate!
-
 You might need to close and open the scene again for the icon change to occur.
+
+The plugin is bundled with an HTML picker (since v1.1.0) and an in-editor dock (since v1.3.0) to easily preview the icons and copy their respective declaration to the clipboard.
 
 ## Contributing
 
