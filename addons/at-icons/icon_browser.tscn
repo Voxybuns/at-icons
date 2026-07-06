@@ -782,9 +782,9 @@ func copy_icon_to_clipboard(filepath: String) -> void:
 	
 	match selected_lang:
 		\"GDScript\":
-			string = \"@icon(\\\"%s\\\")\" % [filepath]
+			string = \"@icon(\\\"%s\\\")\\n\" % [filepath]
 		\"C#\":
-			string = \"[GlobalClass, Icon(\\\"%s\\\")]\" % [filepath]
+			string = \"[GlobalClass, Icon(\\\"%s\\\")]\\n\" % [filepath]
 	
 	DisplayServer.clipboard_set(string)
 	EditorInterface.get_editor_toaster().push_toast(\"Icon declaration copied to clipboard!\")
