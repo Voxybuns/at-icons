@@ -564,8 +564,7 @@ resource_name = "IconGrid"
 script/source = "@tool
 extends HFlowContainer
 
-#const ICON_PREVIEW_WIDTH: int = 48
-const ICON_PREVIEW_WIDTH := 24
+const ICON_PREVIEW_WIDTH: int = 24
 const ICON_PREVIEW_HEIGHT: int = 24
 const ICON_PREVIEW_CORNER_RADIUS: int = 4
 const ICON_SIZE: Vector2 = Vector2(16, 16)
@@ -667,19 +666,6 @@ func _notification(what: int) -> void:
 				get_editor_theme()
 
 
-func _update_button_theme() -> void:
-	_button_theme = Theme.new()
-	
-	var button_clip_stylebox := StyleBoxFlat.new()
-	button_clip_stylebox.corner_radius_bottom_left = ICON_PREVIEW_CORNER_RADIUS
-	button_clip_stylebox.corner_radius_bottom_right = ICON_PREVIEW_CORNER_RADIUS
-	button_clip_stylebox.corner_radius_top_left = ICON_PREVIEW_CORNER_RADIUS
-	button_clip_stylebox.corner_radius_top_right = ICON_PREVIEW_CORNER_RADIUS
-	
-	for state in [\"normal\", \"hover\", \"pressed\", \"hover_pressed\"]:
-		_button_theme.set_stylebox(state, \"Button\", button_clip_stylebox)
-
-
 func update_preview_colors() -> void:
 	icon_material_light.set_shader_parameter(
 		\"requested_color\",
@@ -701,8 +687,8 @@ func get_editor_theme():
 	match settings.get_setting(\"interface/theme/icon_and_font_color\"):
 		0: # Auto
 			var col: Color = settings.get_setting(\"interface/theme/base_color\")
-			var value := col.v
-			color_mode = \"light\" if value > 0.5 else \"dark\"
+			var lightness := col.ok_hsl_l
+			color_mode = \"light\" if lightness > 0.5 else \"dark\"
 		1: # Dark icons ->  light theme
 			color_mode = \"light\"
 		2: # Light icons -> dark theme
@@ -711,102 +697,48 @@ func get_editor_theme():
 
 
 func _initialize_nodes() -> void:
-	_update_button_theme()
-	var dark_bg_style := StyleBoxFlat.new()
-	#dark_bg_style.bg_color = COLORS[\"Preview\"][\"dark\"]
-	dark_bg_style.bg_color = Color.TRANSPARENT
-	var light_bg_style := StyleBoxFlat.new()
-	light_bg_style.bg_color = COLORS[\"Preview\"][\"light\"]
-	
 	_remove_all_children()
 	
 	for texture in icons:
-			var button: Button = Button.new()
-			
-			button.clip_children = CanvasItem.CLIP_CHILDREN_ONLY
-			button.theme = _button_theme
-			button.custom_minimum_size = Vector2(
-				ICON_PREVIEW_WIDTH,
-				ICON_PREVIEW_HEIGHT
-			) * editor_scale
-			button.size = button.custom_minimum_size
-			button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-			button.tooltip_text = texture.resource_path.get_file() + \"\\nClick to copy this icon's declaration to your clipboard.\"
-			
-			
-			var hbox: HBoxContainer = HBoxContainer.new()
-			hbox.add_theme_constant_override(\"separation\", 0)
-			hbox.mouse_behavior_recursive = Control.MOUSE_BEHAVIOR_DISABLED
-			hbox.position = Vector2()
-			hbox.size = button.size
-			
-			
-			#region Dark theme icon preview
-			var panel_d: Panel = Panel.new()
-			panel_d.add_theme_stylebox_override(\"panel\", dark_bg_style)
-			panel_d.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			panel_d.size_flags_vertical = Control.SIZE_EXPAND_FILL
-			
-			var trect_d: TextureRect = TextureRect.new()
-			trect_d.texture = texture
-			trect_d.material = icon_material_dark
-			trect_d.custom_minimum_size = ICON_SIZE
-			trect_d.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-			trect_d.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		var button: Button = Button.new()
+		
+		button.custom_minimum_size = Vector2(
+			ICON_PREVIEW_WIDTH,
+			ICON_PREVIEW_HEIGHT
+		) * editor_scale
+		button.size = button.custom_minimum_size
+		button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		button.tooltip_text = texture.resource_path.get_file() + \"\\nClick to copy this icon's declaration to your clipboard.\"
+		
+		var trect_d: TextureRect = TextureRect.new()
+		trect_d.texture = texture
+		trect_d.material = icon_material_dark
+		trect_d.custom_minimum_size = ICON_SIZE
+		trect_d.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		trect_d.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 
-			panel_d.add_child(trect_d)
-			trect_d.anchor_bottom = 0.5
-			trect_d.offset_bottom = ICON_SIZE.y / 2 * editor_scale
-			trect_d.anchor_top = 0.5
-			trect_d.offset_top = ICON_SIZE.y / -2 * editor_scale
-			trect_d.anchor_right = 0.5
-			trect_d.offset_right = ICON_SIZE.x / 2 * editor_scale
-			trect_d.anchor_left = 0.5
-			trect_d.offset_left = ICON_SIZE.x / -2 * editor_scale
-			
-			hbox.add_child(panel_d)
-			
-			#endregion
-			
-			##region Light theme icon preview
-			#var panel_l: Panel = Panel.new()
-			#panel_l.add_theme_stylebox_override(\"panel\", light_bg_style)
-			#panel_l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			#panel_l.size_flags_vertical = Control.SIZE_EXPAND_FILL
-			#
-			#var trect_l: TextureRect = TextureRect.new()
-			#trect_l.texture = texture
-			#trect_l.material = icon_material_light
-			#trect_l.custom_minimum_size = ICON_SIZE
-			#trect_l.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-			#trect_l.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-			#
-			#panel_l.add_child(trect_l)
-			#trect_l.anchor_bottom = 0.5
-			#trect_l.offset_bottom = ICON_SIZE.y / 2 * editor_scale
-			#trect_l.anchor_top = 0.5
-			#trect_l.offset_top = ICON_SIZE.y / -2 * editor_scale 
-			#trect_l.anchor_right = 0.5
-			#trect_l.offset_right = ICON_SIZE.x / 2 * editor_scale
-			#trect_l.anchor_left = 0.5
-			#trect_l.offset_left = ICON_SIZE.x / -2 * editor_scale
-			#
-			#hbox.add_child(panel_l)
-			#panel_l.hide()
-#
-			##endregion
-			
-			button.add_child(hbox)
-			button.name = texture.resource_path.get_file().get_basename()
-			self.add_child(button)
-			
-			
-			button.pressed.connect(func():
-				copy_icon_to_clipboard(
-					texture.resource_path.replace(
-						\"node3d\", 
-						selected_type.to_lower()
-			)))
+		button.add_child(trect_d)
+		trect_d.anchor_bottom = 0.5
+		trect_d.offset_bottom = ICON_SIZE.y / 2 * editor_scale
+		trect_d.anchor_top = 0.5
+		trect_d.offset_top = ICON_SIZE.y / -2 * editor_scale
+		trect_d.anchor_right = 0.5
+		trect_d.offset_right = ICON_SIZE.x / 2 * editor_scale
+		trect_d.anchor_left = 0.5
+		trect_d.offset_left = ICON_SIZE.x / -2 * editor_scale
+		
+		#endregion
+		
+		button.name = texture.resource_path.get_file().get_basename()
+		self.add_child(button)
+		
+		
+		button.pressed.connect(func():
+			copy_icon_to_clipboard(
+				texture.resource_path.replace(
+					\"node3d\", 
+					selected_type.to_lower()
+		)))
 
 
 ## Might decrease lag.
@@ -1024,8 +956,6 @@ horizontal_scroll_mode = 0
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/h_separation = 2
-theme_override_constants/v_separation = 2
 script = SubResource("GDScript_54k6s")
 icons = Array[Texture2D]([ExtResource("2_hoi3v"), ExtResource("3_xi0nd"), ExtResource("4_rdm87"), ExtResource("5_dmsl0"), ExtResource("6_pn5da"), ExtResource("7_5mjom"), ExtResource("8_opbmk"), ExtResource("9_eev8w"), ExtResource("10_ben62"), ExtResource("11_bcjsm"), ExtResource("12_q4g3q"), ExtResource("13_sx4il"), ExtResource("14_euppd"), ExtResource("15_hht2r"), ExtResource("16_k8o73"), ExtResource("17_t3cgl"), ExtResource("18_c8js0"), ExtResource("19_ynu7e"), ExtResource("20_jtd0s"), ExtResource("21_ouo8b"), ExtResource("22_hhiy2"), ExtResource("23_wuiak"), ExtResource("24_te63e"), ExtResource("25_a0tfj"), ExtResource("26_a62xi"), ExtResource("27_vw0ka"), ExtResource("28_eee7t"), ExtResource("29_yqssc"), ExtResource("30_e3ebq"), ExtResource("31_w3yto"), ExtResource("32_kr7tl"), ExtResource("33_qgg7q"), ExtResource("34_w2hs7"), ExtResource("35_gbhml"), ExtResource("36_eyscw"), ExtResource("37_tlrup"), ExtResource("38_bwl7b"), ExtResource("39_scx4q"), ExtResource("40_s7ain"), ExtResource("41_bq6rf"), ExtResource("42_p8s7e"), ExtResource("43_grbxd"), ExtResource("44_wqd70"), ExtResource("45_gh20x"), ExtResource("46_10mmm"), ExtResource("47_xei4u"), ExtResource("48_55cbo"), ExtResource("49_sdypx"), ExtResource("50_uwv1u"), ExtResource("51_212cd"), ExtResource("52_w6gsx"), ExtResource("53_ntusm"), ExtResource("54_an2me"), ExtResource("55_i6d77"), ExtResource("56_4mejp"), ExtResource("57_nbyxn"), ExtResource("58_l4u8s"), ExtResource("59_76fd3"), ExtResource("60_8w4xl"), ExtResource("61_krkwi"), ExtResource("62_0x3hn"), ExtResource("63_c6lia"), ExtResource("64_ev84n"), ExtResource("65_6bko7"), ExtResource("66_v2gej"), ExtResource("67_mv1jx"), ExtResource("68_r7mo4"), ExtResource("69_a254c"), ExtResource("70_ouotv"), ExtResource("71_anwei"), ExtResource("72_h43mc"), ExtResource("73_0oor5"), ExtResource("74_0pxoa"), ExtResource("75_il3vv"), ExtResource("76_3vc1t"), ExtResource("77_02ocu"), ExtResource("78_s1hpc"), ExtResource("79_2lno2"), ExtResource("80_p4ns8"), ExtResource("81_g3tem"), ExtResource("82_5qvlw"), ExtResource("83_3i2w4"), ExtResource("84_wedxa"), ExtResource("85_32gbm"), ExtResource("86_w1dcs"), ExtResource("87_a7ogh"), ExtResource("88_lajng"), ExtResource("89_aigrk"), ExtResource("90_y20hg"), ExtResource("91_0oxff"), ExtResource("92_hxsfh"), ExtResource("93_o4ue4"), ExtResource("94_bgwdq"), ExtResource("95_77k5j"), ExtResource("96_j4f14"), ExtResource("97_31q65"), ExtResource("98_or1lq"), ExtResource("99_bm6hp"), ExtResource("100_hhfxx"), ExtResource("101_uy06i"), ExtResource("102_aochm"), ExtResource("103_rmg0d"), ExtResource("104_pnq63"), ExtResource("105_xwchg"), ExtResource("106_sqomx"), ExtResource("107_8dafr"), ExtResource("108_yew08"), ExtResource("109_7tfng"), ExtResource("110_up0b7"), ExtResource("111_brh14"), ExtResource("112_fdkc1"), ExtResource("113_iumou"), ExtResource("114_t1xrw"), ExtResource("115_ycfkq"), ExtResource("116_psbvw"), ExtResource("117_qwjnw"), ExtResource("118_f6oso"), ExtResource("119_5ykia"), ExtResource("120_md4fy"), ExtResource("121_er0ui"), ExtResource("122_s3urb"), ExtResource("123_ey1dv"), ExtResource("124_j1ubo"), ExtResource("125_u6f3e"), ExtResource("126_skyuj"), ExtResource("127_5v182"), ExtResource("128_7hs1v"), ExtResource("129_1tiks"), ExtResource("130_3d72w"), ExtResource("131_t5a0e"), ExtResource("132_jpjw2"), ExtResource("133_w65p5"), ExtResource("134_ycxir"), ExtResource("135_n3tx0"), ExtResource("136_ku4dm"), ExtResource("137_so6tk"), ExtResource("138_mo257"), ExtResource("139_5y4tj"), ExtResource("140_82stp"), ExtResource("141_2id0o"), ExtResource("142_on41b"), ExtResource("143_oli8c"), ExtResource("144_jcspo"), ExtResource("145_bilwg"), ExtResource("146_l3kaf"), ExtResource("147_yltai"), ExtResource("148_h1ba1"), ExtResource("149_lejn3"), ExtResource("150_4gplh"), ExtResource("151_pqooe"), ExtResource("152_otire"), ExtResource("153_2yk3b"), ExtResource("154_abb0n"), ExtResource("155_nq11i"), ExtResource("156_wpqjd"), ExtResource("157_dkqqv"), ExtResource("158_7b1d8"), ExtResource("159_vnchv"), ExtResource("160_5alhk"), ExtResource("161_vjln6"), ExtResource("162_avm85"), ExtResource("163_guyq4"), ExtResource("164_ofj0m"), ExtResource("165_t3xnv"), ExtResource("166_xrf4f"), ExtResource("167_2brcx"), ExtResource("168_k300v"), ExtResource("169_8pqjc"), ExtResource("170_750my"), ExtResource("171_gjryr"), ExtResource("172_veq60"), ExtResource("173_u2wjb"), ExtResource("174_l6hs2"), ExtResource("175_l6iso"), ExtResource("176_vlgo8"), ExtResource("177_o6mlb"), ExtResource("178_i04tw"), ExtResource("179_txxyw"), ExtResource("180_6u04a"), ExtResource("181_6dqeu"), ExtResource("182_7oywc"), ExtResource("183_iuc5g"), ExtResource("184_arq5x"), ExtResource("185_cqilj"), ExtResource("186_lw08i"), ExtResource("187_o8any"), ExtResource("188_gaoxd"), ExtResource("189_e5gbu"), ExtResource("190_xjvn0"), ExtResource("191_vsfmw"), ExtResource("192_ckmr6"), ExtResource("193_hvte7"), ExtResource("194_ta34c"), ExtResource("195_4xex1"), ExtResource("196_4by3o"), ExtResource("197_2kynv"), ExtResource("198_dr8o4"), ExtResource("199_g2hym"), ExtResource("200_xgqe2"), ExtResource("201_4tpe2"), ExtResource("202_krevm"), ExtResource("203_jec1h"), ExtResource("204_p1jki"), ExtResource("205_iunbb"), ExtResource("206_vs0bh"), ExtResource("207_4ujup"), ExtResource("208_lx4ai"), ExtResource("209_ihflg"), ExtResource("210_fr2ag"), ExtResource("211_mcg2o"), ExtResource("212_x8jpc"), ExtResource("213_1uxvf"), ExtResource("214_c6pl3"), ExtResource("215_0xtih"), ExtResource("216_pbjg4"), ExtResource("217_vy6tw"), ExtResource("218_sa01m"), ExtResource("219_8uqwo"), ExtResource("220_8ffue"), ExtResource("221_thocd"), ExtResource("222_ogpc3"), ExtResource("223_dxu2g"), ExtResource("224_k4j85"), ExtResource("225_vv45d"), ExtResource("226_yt1o0"), ExtResource("227_l6t02"), ExtResource("228_4ntc5"), ExtResource("229_q6p7p"), ExtResource("230_iha0r"), ExtResource("231_n3xma"), ExtResource("232_we2si"), ExtResource("233_qst4m"), ExtResource("234_kr7a1"), ExtResource("235_m7roo"), ExtResource("236_adsnp"), ExtResource("237_da8uj"), ExtResource("238_qbu26"), ExtResource("239_jhjlk"), ExtResource("240_akonp"), ExtResource("241_fniqr"), ExtResource("242_t7pmv"), ExtResource("243_coavk"), ExtResource("244_d6bl5"), ExtResource("245_t5a0a"), ExtResource("246_4fpur"), ExtResource("247_fmi7v"), ExtResource("248_frlqa"), ExtResource("249_w2uwn"), ExtResource("250_2xe8l"), ExtResource("251_l4f37"), ExtResource("252_07egq"), ExtResource("253_1hjwm"), ExtResource("254_cog56"), ExtResource("255_4doi5"), ExtResource("256_ev01y"), ExtResource("257_6w2oe"), ExtResource("258_p00uk"), ExtResource("259_u64oe"), ExtResource("260_cslo5"), ExtResource("261_bljst"), ExtResource("262_5jhns"), ExtResource("263_v6tcb"), ExtResource("264_4hdk1"), ExtResource("265_i1r17"), ExtResource("266_aqtmq"), ExtResource("267_glmbf"), ExtResource("268_0gg52"), ExtResource("269_2oc6i"), ExtResource("270_li8xk"), ExtResource("271_gyub3"), ExtResource("272_cp5im"), ExtResource("273_dsvm5"), ExtResource("274_7w5s8"), ExtResource("275_cugmf"), ExtResource("276_xf1re"), ExtResource("277_f4h8d"), ExtResource("278_chcvl"), ExtResource("279_db217"), ExtResource("280_4evhd"), ExtResource("281_vs0ta"), ExtResource("282_pve5h"), ExtResource("283_prqb5"), ExtResource("284_e88p6"), ExtResource("285_bl8b2"), ExtResource("286_0flst"), ExtResource("287_adb5u"), ExtResource("288_svj6d"), ExtResource("289_qjcio"), ExtResource("290_824hy"), ExtResource("291_kgdhr"), ExtResource("292_g78oa"), ExtResource("293_hbiqt"), ExtResource("294_kpvo7"), ExtResource("295_mvigx"), ExtResource("296_ua6vy"), ExtResource("297_2o7ej"), ExtResource("298_dxnnm"), ExtResource("299_bbt7v"), ExtResource("300_m4mtg"), ExtResource("301_a0mpw"), ExtResource("302_ohu5e"), ExtResource("303_tmesw"), ExtResource("304_kcf00"), ExtResource("305_eutcl"), ExtResource("306_vfdyy"), ExtResource("307_i822c"), ExtResource("308_iyx10"), ExtResource("309_d4vd5"), ExtResource("310_3t2bh"), ExtResource("311_dcyg4"), ExtResource("312_y4sft"), ExtResource("313_0txhq"), ExtResource("314_q1xmq"), ExtResource("315_nuv2n"), ExtResource("316_5rlox"), ExtResource("317_v16n4"), ExtResource("318_f7hny"), ExtResource("319_sdb4f"), ExtResource("320_n8d5b"), ExtResource("321_2aqbp"), ExtResource("322_fh1qu"), ExtResource("323_3qrtp"), ExtResource("324_7ck6a"), ExtResource("325_3gcgv"), ExtResource("326_a68te"), ExtResource("327_uwqnq"), ExtResource("328_p8ld6"), ExtResource("329_a2ilx"), ExtResource("330_ls3uk"), ExtResource("331_jydo4"), ExtResource("332_rpctg"), ExtResource("333_u17ko"), ExtResource("334_c2dh6"), ExtResource("335_p4wsg"), ExtResource("336_if4r8"), ExtResource("337_iv5l6"), ExtResource("338_4ss3y"), ExtResource("339_s54nd"), ExtResource("340_xquoq"), ExtResource("341_3hpg4"), ExtResource("342_f374r"), ExtResource("343_55q13"), ExtResource("344_ippil"), ExtResource("345_2pt61"), ExtResource("346_dd2ou"), ExtResource("347_gc4rm"), ExtResource("348_t7m6f"), ExtResource("349_31p1u"), ExtResource("350_4axth"), ExtResource("351_3o7fu"), ExtResource("352_q34me"), ExtResource("353_72bb8"), ExtResource("354_3jjsp"), ExtResource("355_c3vcb"), ExtResource("356_x8bba"), ExtResource("357_h5fxc"), ExtResource("358_7rs73"), ExtResource("359_xss1j"), ExtResource("360_37dkq"), ExtResource("361_mg663"), ExtResource("362_531g6"), ExtResource("363_mti6p"), ExtResource("364_hcx02"), ExtResource("365_87fgv"), ExtResource("366_0hdlo"), ExtResource("367_bu7pp"), ExtResource("368_3rdk3"), ExtResource("369_oqapx"), ExtResource("370_6vkyx"), ExtResource("371_5dlv0"), ExtResource("372_hk1k4"), ExtResource("373_8ojf6"), ExtResource("374_625ki"), ExtResource("375_04jnc"), ExtResource("376_s8kxa"), ExtResource("377_72shv"), ExtResource("378_fclju"), ExtResource("379_bhfad"), ExtResource("380_sei4o"), ExtResource("381_7iym3"), ExtResource("382_n5jan"), ExtResource("383_htns2"), ExtResource("384_qe3kg"), ExtResource("385_mvjkn"), ExtResource("386_v6nm1"), ExtResource("387_x0hik"), ExtResource("388_7sqsh"), ExtResource("389_j2on3"), ExtResource("390_pf7gh"), ExtResource("391_fwwl5"), ExtResource("392_jyrb6"), ExtResource("393_c332u"), ExtResource("394_hg4tb"), ExtResource("395_u2oej"), ExtResource("396_xu84a"), ExtResource("397_yqhw4"), ExtResource("398_bl66l"), ExtResource("399_88g08"), ExtResource("400_pfouq"), ExtResource("401_1jfjb"), ExtResource("402_n1s5b"), ExtResource("403_xnccq"), ExtResource("404_ub6vs"), ExtResource("405_k6esl"), ExtResource("406_hefpy"), ExtResource("407_wkn6s"), ExtResource("408_h5ip7"), ExtResource("409_r27mc"), ExtResource("410_lpety"), ExtResource("411_kql1s"), ExtResource("412_rjpco"), ExtResource("413_wde8y"), ExtResource("414_aa7v4"), ExtResource("415_4ofpj"), ExtResource("416_ueqds"), ExtResource("417_r6pte"), ExtResource("418_261gs"), ExtResource("419_dlg5c"), ExtResource("420_1op3v"), ExtResource("421_e7xwy"), ExtResource("422_udx4a"), ExtResource("423_4bd2e"), ExtResource("424_vgxb2"), ExtResource("425_3qnd0"), ExtResource("426_3qm6r"), ExtResource("427_l6j0d"), ExtResource("428_xwmk5"), ExtResource("429_rnb0h"), ExtResource("430_ndyso"), ExtResource("431_ixc3c"), ExtResource("432_oudj6"), ExtResource("433_mmhxc"), ExtResource("434_37ndx"), ExtResource("435_6ae7i"), ExtResource("436_0lywg"), ExtResource("437_lgsym"), ExtResource("438_f2fkn"), ExtResource("439_eikyj"), ExtResource("440_rnbsx"), ExtResource("441_r3hph"), ExtResource("442_u508o"), ExtResource("443_omsf5"), ExtResource("444_4cq14"), ExtResource("445_yvo3j"), ExtResource("446_so1tt"), ExtResource("447_ietty"), ExtResource("448_5q0t4"), ExtResource("449_6xthn"), ExtResource("450_q06sh"), ExtResource("451_0wnh6"), ExtResource("452_xoe8f"), ExtResource("453_e5qqs"), ExtResource("454_syyln"), ExtResource("455_7syyh"), ExtResource("456_rffx1"), ExtResource("457_2itf1"), ExtResource("458_trhxg"), ExtResource("459_x46xs"), ExtResource("460_wpees"), ExtResource("461_11d2b"), ExtResource("462_8d5iv"), ExtResource("463_0sn4m"), ExtResource("464_f504p"), ExtResource("465_tygf6"), ExtResource("466_dirkb"), ExtResource("467_o6js8"), ExtResource("468_vxqxo"), ExtResource("469_0cwki"), ExtResource("470_6u2dj"), ExtResource("471_oxl8b"), ExtResource("472_nya81"), ExtResource("473_66411"), ExtResource("474_75t0c"), ExtResource("475_c8nq5"), ExtResource("476_awdip"), ExtResource("477_dfgh7"), ExtResource("478_7xbdp"), ExtResource("479_mru7m"), ExtResource("480_kpwea"), ExtResource("481_qi28x"), ExtResource("482_x2frh"), ExtResource("483_qaf65"), ExtResource("484_ongaw"), ExtResource("485_bwlbq"), ExtResource("486_0pfku"), ExtResource("487_gfycn"), ExtResource("488_qn8yn"), ExtResource("489_3gbfh"), ExtResource("490_ukjv3"), ExtResource("491_q0wsd"), ExtResource("492_q7s3l"), ExtResource("493_5ihgv"), ExtResource("494_owy8h"), ExtResource("495_wuspg"), ExtResource("496_ly2la"), ExtResource("497_tot1l"), ExtResource("498_w48ke"), ExtResource("499_x5d85"), ExtResource("500_uudeg"), ExtResource("501_nwtag"), ExtResource("502_pto65"), ExtResource("503_vnspa"), ExtResource("504_mcc58"), ExtResource("505_xutb8"), ExtResource("506_8k75n"), ExtResource("507_puhwm"), ExtResource("508_obk5s"), ExtResource("509_tn8cd"), ExtResource("510_yho2n"), ExtResource("511_qi07f"), ExtResource("512_uekht"), ExtResource("513_5r62u"), ExtResource("514_sbwdw"), ExtResource("515_ugss6"), ExtResource("516_222ej"), ExtResource("517_sdg3k"), ExtResource("518_nmj2q"), ExtResource("519_bcesk"), ExtResource("520_623tf"), ExtResource("521_5rhsn"), ExtResource("522_dl17k"), ExtResource("523_kpgjv"), ExtResource("524_rhs2y"), ExtResource("525_2sycr"), ExtResource("526_l4amm"), ExtResource("527_3ipb3"), ExtResource("528_7fika"), ExtResource("529_fcrl7"), ExtResource("530_t6fxo"), ExtResource("531_q2oeg"), ExtResource("532_4k3xg"), ExtResource("533_k1wxq"), ExtResource("534_o0k7o"), ExtResource("535_8l22r"), ExtResource("536_dilse"), ExtResource("537_tmerm"), ExtResource("538_2v1la"), ExtResource("539_4iq1l"), ExtResource("540_eodju"), ExtResource("541_h5wbk"), ExtResource("542_ambse"), ExtResource("543_t7hbh"), ExtResource("544_faldl"), ExtResource("545_1kavs"), ExtResource("546_mf18j"), ExtResource("547_esk34"), ExtResource("548_qx800"), ExtResource("549_5y7ku"), ExtResource("550_i7fw8"), ExtResource("551_pnwqy"), ExtResource("552_cy1cd"), ExtResource("553_kn8h6"), ExtResource("554_bybnq"), ExtResource("555_hkjd4"), ExtResource("556_ioyam"), ExtResource("557_i78vs"), ExtResource("558_daxhe")])
 icon_shader = SubResource("Shader_8e00h")
