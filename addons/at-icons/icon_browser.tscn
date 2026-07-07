@@ -873,7 +873,7 @@ func _ready() -> void:
 	update_search_aliases()
 "
 
-[node name="At-Icons Picker" type="Control" unique_id=1278436117]
+[node name="AtIcons" type="Control" unique_id=1278436117]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
