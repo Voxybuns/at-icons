@@ -16,6 +16,7 @@ var dock : EditorDock
 func _enter_tree() -> void:
 	# Initialization of the plugin goes here.
 	dock = EditorDock.new()
+	dock.title = "@icons"
 	dock.dock_icon = preload("res://addons/at-icons/node/at.svg")
 	dock.default_slot = EditorDock.DOCK_SLOT_RIGHT_UL
 	var dock_content := preload("res://addons/at-icons/icon_browser.tscn").instantiate()
