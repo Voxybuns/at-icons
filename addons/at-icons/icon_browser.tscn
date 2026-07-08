@@ -966,7 +966,6 @@ text = "2× Scale"
 [node name="ScaleToggle" type="CheckBox" parent="MainContainer/Options/Scale" unique_id=994074905]
 unique_name_in_owner = true
 layout_mode = 2
-button_pressed = true
 text = "On"
 
 [node name="SearchBar" type="LineEdit" parent="MainContainer" unique_id=568912931]
