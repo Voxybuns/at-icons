@@ -639,13 +639,30 @@ var selected_lang: String:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Make sure the color selector can send a signal to update the previews
+	# Icon type -> update colors
 	if icon_type_button and icon_type_button.item_selected.is_connected(update_preview_colors):
 		icon_type_button.item_selected.disconnect(update_preview_colors)
 	icon_type_button.item_selected.connect(update_preview_colors.unbind(1))
 	
-	if scale_toggle and scale_toggle.toggled.is_connected(update_icon_list):
+	# Scale toggle -> update scale
+	if scale_toggle and scale_toggle.toggled.is_connected(update_icon_scale):
 		scale_toggle.toggled.disconnect(update_icon_scale)
 	scale_toggle.toggled.connect(update_icon_scale.unbind(1))
+	
+	# Icon type -> editor settings
+	if icon_type_button and icon_type_button.item_selected.is_connected(_update_editor_settings):
+		icon_type_button.item_selected.disconnect(_update_editor_settings)
+	icon_type_button.item_selected.connect(_update_editor_settings.unbind(1))
+	
+	# Declaration type -> editor settings
+	if declaration_type_button and declaration_type_button.item_selected.is_connected(_update_editor_settings):
+		declaration_type_button.item_selected.disconnect(_update_editor_settings)
+	declaration_type_button.item_selected.connect(_update_editor_settings.unbind(1))
+	
+	# Scale toggle -> editor settings
+	if scale_toggle and scale_toggle.toggled.is_connected(_update_editor_settings):
+		scale_toggle.toggled.disconnect(_update_editor_settings)
+	scale_toggle.toggled.connect(_update_editor_settings.unbind(1))
 	
 	# Prevent an error from occuring should the picker scene be ran externally
 	if Engine.is_editor_hint():
@@ -667,6 +684,7 @@ func _ready() -> void:
 	
 	get_editor_theme()
 	#update_preview_colors() # its called in get_editor_theme()
+	_update_from_editor_settings.call_deferred()
 
 
 func _notification(what: int) -> void:
@@ -840,6 +858,75 @@ func search(text: String) -> void:
 			if text in alias:
 				child.show()
 				break # if one alias has it, don't bother with the others
+
+
+func _get_items(option_button: OptionButton, exclude_first := true) -> Array[String]:
+	var array: Array[String]
+	for i in range(option_button.item_count):
+		if i == 0: continue
+		array.append(option_button.get_item_text(i))
+	return array
+
+
+const SETTING_NAME_COLOR := \"@icons/icon_color\"
+const SETTING_NAME_LANG := \"@icons/declaration_language\"
+const SETTING_NAME_SCALE := \"@icons/double_scale\"
+
+
+func _update_editor_settings() -> void:
+	var settings := EditorInterface.get_editor_settings()
+	
+	settings.set_setting(SETTING_NAME_COLOR, selected_type)
+	settings.set_setting(SETTING_NAME_LANG, selected_lang)
+	settings.set_setting(SETTING_NAME_SCALE, scale_toggle.button_pressed)
+	
+	#region setting info dicts
+	var setting_color := {
+		name = SETTING_NAME_COLOR,
+		type = TYPE_STRING,
+		hint = PROPERTY_HINT_ENUM,
+		hint_string = _get_items(icon_type_button).reduce((func(accum, next):
+			return accum + \",\" + next), icon_type_button.get_item_text(0)
+		)
+	}
+	
+	var setting_lang := {
+		name = SETTING_NAME_LANG,
+		type = TYPE_STRING,
+		hint = PROPERTY_HINT_ENUM,
+		hint_string = _get_items(declaration_type_button).reduce((func(accum, next):
+			return accum + \",\" + next), declaration_type_button.get_item_text(0)
+		)
+	}
+	
+	var setting_double_scale := {
+		name = SETTING_NAME_SCALE,
+		type = TYPE_BOOL,
+		hint = PROPERTY_HINT_NONE,
+		hint_string = \"\"
+	}
+	#endregion
+	
+	settings.add_property_info(setting_color)
+	settings.add_property_info(setting_lang)
+	settings.add_property_info(setting_double_scale)
+
+
+func _update_from_editor_settings() -> void:
+	var settings := EditorInterface.get_editor_settings()
+	
+	icon_type_button.select(_get_items(icon_type_button, false).find(
+		settings.get_setting(SETTING_NAME_COLOR)
+	) + 1)
+	
+	declaration_type_button.select(_get_items(declaration_type_button, false).find(
+		settings.get_setting(SETTING_NAME_LANG)
+	) + 1)
+	
+	scale_toggle.button_pressed = settings.get_setting(SETTING_NAME_SCALE)
+	#print_debug(settings.get_setting(SETTING_NAME_SCALE))
+	
+	update_preview_colors()
 "
 
 [sub_resource type="Shader" id="Shader_8e00h"]
