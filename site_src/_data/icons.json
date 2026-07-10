@@ -220,7 +220,7 @@
     "id": "223:336"
   },
   "sun": {
-    "description": "astronomy, space, day, sunny, weather, hot, warm, cosmos, star, scifi",
+    "description": "astronomy, space, day, sunny, weather, hot, warm, cosmos, star, scifi, sunlight",
     "documentationLinks": [],
     "id": "223:115"
   },
@@ -355,7 +355,7 @@
     "id": "223:293"
   },
   "sky": {
-    "description": "clouds, air, atmosphere",
+    "description": "clouds, air, atmosphere, skybox",
     "documentationLinks": [],
     "id": "223:70"
   },
@@ -370,7 +370,7 @@
     "id": "223:284"
   },
   "signal_wave": {
-    "description": "radio, sound, audio",
+    "description": "radio, sound, audio, pulse, heartbeat, life",
     "documentationLinks": [],
     "id": "223:291"
   },
@@ -425,7 +425,7 @@
     "id": "223:331"
   },
   "rocketship": {
-    "description": "scifi, vehicle, space, travel, transportation, spaceship, cosmos, astronomy",
+    "description": "scifi, vehicle, space, travel, transportation, spaceship, cosmos, astronomy, launch, release, achievement",
     "documentationLinks": [],
     "id": "223:92"
   },
@@ -695,12 +695,12 @@
     "id": "223:204"
   },
   "mountains": {
-    "description": "hills, terrain, world, map, location",
+    "description": "hills, terrain, world, map, location, focus, far, horizon, landscape",
     "documentationLinks": [],
     "id": "223:121"
   },
   "moon": {
-    "description": "night, dark, satellite, crescent, phase",
+    "description": "night, dark, satellite, crescent, phase, moonlight",
     "documentationLinks": [],
     "id": "223:235"
   },
@@ -1055,7 +1055,7 @@
     "id": "223:133"
   },
   "flower": {
-    "description": "bloom, petals, plant, botany, nature",
+    "description": "bloom, petals, plant, botany, nature, focus, macro",
     "documentationLinks": [],
     "id": "223:129"
   },
@@ -1235,7 +1235,7 @@
     "id": "223:299"
   },
   "delivery_box": {
-    "description": "container, crate, shipment, parcel",
+    "description": "container, crate, shipment, parcel, package, archive, bundle",
     "documentationLinks": [],
     "id": "223:98"
   },
@@ -1370,7 +1370,7 @@
     "id": "223:348"
   },
   "cloud": {
-    "description": "weather, sky, cloudy, float, light",
+    "description": "weather, sky, cloudy, float, light, overcast",
     "documentationLinks": [],
     "id": "223:69"
   },
@@ -1830,7 +1830,7 @@
     "id": "223:225"
   },
   "arrow_local_axes": {
-    "description": "transform, coordinates, axis, relative",
+    "description": "transform, coordinates, axis, relative, vector3, vec3, x, y, z, position, location, dimensional, space, spatial",
     "documentationLinks": [],
     "id": "223:312"
   },
@@ -1920,7 +1920,7 @@
     "id": "223:9"
   },
   "arrow_axes": {
-    "description": "3d, orthographic, transform, coordinates, axis",
+    "description": "3d, orthographic, transform, coordinates, axis, vector3, vec3, x, y, z, position, location, dimensional, space, spatial",
     "documentationLinks": [],
     "id": "223:330"
   },
@@ -1935,7 +1935,7 @@
     "id": "223:302"
   },
   "archive": {
-    "description": "box, stash, store, asset, container, storage",
+    "description": "box, stash, store, asset, container, storage, package, bundle",
     "documentationLinks": [],
     "id": "223:56"
   },
@@ -2270,7 +2270,7 @@
     "id": "223:513"
   },
   "number_sign": {
-    "description": "pound, hash",
+    "description": "pound, hash, integer, numeral",
     "documentationLinks": [],
     "id": "223:498"
   },
@@ -2565,7 +2565,7 @@
     "id": "320:475"
   },
   "table": {
-    "description": "data, formatting, spreadsheet, rows, columns, text, editing, insert",
+    "description": "data, formatting, spreadsheet, rows, columns, text, editing, insert, dictionary",
     "documentationLinks": [],
     "id": "320:485"
   },
@@ -2590,7 +2590,7 @@
     "id": "320:474"
   },
   "quotation_marks": {
-    "description": "quote, quoteblock, cite, text, editing, formatting, insert",
+    "description": "quote, quoteblock, cite, text, editing, formatting, insert, string",
     "documentationLinks": [],
     "id": "320:487"
   },
@@ -2783,5 +2783,240 @@
     "description": "body, emotion, furious, upset, mad, smiley, emoji",
     "documentationLinks": [],
     "id": "320:455"
+  },
+  "video_camera": {
+    "description": "movie, filmmaking, filming, recording, motion, cinema, cinematic, viewpoint",
+    "documentationLinks": [],
+    "id": "404:237"
+  },
+  "tungsten_light": {
+    "description": "incandescent, white, balance, lightbulb, warm",
+    "documentationLinks": [],
+    "id": "404:233"
+  },
+  "television_flat_screen": {
+    "description": "monitor, screen, display, widescreen, projection, watch",
+    "documentationLinks": [],
+    "id": "404:222"
+  },
+  "square_brackets": {
+    "description": "array, enclose",
+    "documentationLinks": [],
+    "id": "404:252"
+  },
+  "sky_panorama": {
+    "description": "clouds, atmosphere, air, equirectangular, panoramic, panorama",
+    "documentationLinks": [],
+    "id": "404:249"
+  },
+  "sky_dome": {
+    "description": "skysphere, sphere, clouds, atmosphere, air",
+    "documentationLinks": [],
+    "id": "404:221"
+  },
+  "siren": {
+    "description": "warning, emergency, urgent, light, flash, urgency, crucial, critical, important, caution",
+    "documentationLinks": [],
+    "id": "404:230"
+  },
+  "shop": {
+    "description": "store, convenience, buy, purchase, building, commercial, storefront, market, marketplace",
+    "documentationLinks": [],
+    "id": "404:238"
+  },
+  "sewing_needle": {
+    "description": "thread, stitch, sting, sharp, poke, knitting, suture, crochet, embroidering, yarn",
+    "documentationLinks": [],
+    "id": "404:250"
+  },
+  "selection_square": {
+    "description": "marquee, rectangular, rectangle",
+    "documentationLinks": [],
+    "id": "404:248"
+  },
+  "selection_circle": {
+    "description": "marquee, round, circular, ellipse",
+    "documentationLinks": [],
+    "id": "404:231"
+  },
+  "security_camera": {
+    "description": "surveillance, observation, spying",
+    "documentationLinks": [],
+    "id": "404:256"
+  },
+  "rainbow": {
+    "description": "lgbtqia, light, prism, colors",
+    "documentationLinks": [],
+    "id": "404:247"
+  },
+  "quaternion": {
+    "description": "rotation, angle, vector, x, y, z, w, turning, transform, space",
+    "documentationLinks": [],
+    "id": "404:219"
+  },
+  "pointer_right": {
+    "description": "cursor, index, link, tap, touch, body, finger, manicule, direction",
+    "documentationLinks": [],
+    "id": "404:255"
+  },
+  "pointer_left": {
+    "description": "cursor, index, link, tap, touch, body, finger, manicule, direction",
+    "documentationLinks": [],
+    "id": "409:67"
+  },
+  "pointer_down": {
+    "description": "cursor, index, link, tap, touch, body, finger, manicule, direction",
+    "documentationLinks": [],
+    "id": "409:68"
+  },
+  "person_body": {
+    "description": "human, stickman, man, woman, player, character, humanoid",
+    "documentationLinks": [],
+    "id": "404:224"
+  },
+  "number_float": {
+    "description": "decimal, point, real, numeral, fractional, mathematics",
+    "documentationLinks": [],
+    "id": "404:254"
+  },
+  "node_graph": {
+    "description": "diagram, flowchart, shader, visual, programming, logic, wire, connections",
+    "documentationLinks": [],
+    "id": "404:225"
+  },
+  "movie_reel": {
+    "description": "film, cinematography, motion, picture, filming, filmmaking, view, spool, project, frames",
+    "documentationLinks": [],
+    "id": "404:228"
+  },
+  "mesh_quad": {
+    "description": "geometry, 3d, modeling, vertex, vertices, edges, faces, polygon",
+    "documentationLinks": [],
+    "id": "404:226"
+  },
+  "mesh_polygon": {
+    "description": "triangle, geometry, 3d, modeling, vertex, vertices, edges, faces, triangulated",
+    "documentationLinks": [],
+    "id": "404:227"
+  },
+  "mesh_plane": {
+    "description": "triangle, triangulated, geometry, 3d, modeling, vertex, vertices, edges, faces, polygon",
+    "documentationLinks": [],
+    "id": "404:243"
+  },
+  "megaphone": {
+    "description": "callable, loudspeaker, announcement, important",
+    "documentationLinks": [],
+    "id": "404:229"
+  },
+  "matrix": {
+    "description": "mathematics, transform, transformation, projection, matrices, row, column, square, transpose, transposition, identity, basis, determinant",
+    "documentationLinks": [],
+    "id": "404:245"
+  },
+  "grid_perspective": {
+    "description": "floor, vanishing, point, distance, ground, view, perspective",
+    "documentationLinks": [],
+    "id": "404:260"
+  },
+  "git_pull_request": {
+    "description": "version, control, state, machine, open, source, branch",
+    "documentationLinks": [],
+    "id": "404:246"
+  },
+  "git_merge": {
+    "description": "version, control, state, machine, open, source, pull, request, branch",
+    "documentationLinks": [],
+    "id": "404:258"
+  },
+  "git_fork": {
+    "description": "version, control, open, source, split, separate, state, machine",
+    "documentationLinks": [],
+    "id": "404:253"
+  },
+  "git_commit": {
+    "description": "version, control, open, source, state, machine",
+    "documentationLinks": [],
+    "id": "404:262"
+  },
+  "git_branch": {
+    "description": "version, control, state, machine, open, source, split, feature",
+    "documentationLinks": [],
+    "id": "404:257"
+  },
+  "fluorescent_light": {
+    "description": "tube, white, balance, neon, cool, cold",
+    "documentationLinks": [],
+    "id": "404:234"
+  },
+  "floor_plane": {
+    "description": "ground, solid, axis, up",
+    "documentationLinks": [],
+    "id": "404:218"
+  },
+  "film_cartridge": {
+    "description": "spool, reel, photography, picture, develop, process, print",
+    "documentationLinks": [],
+    "id": "404:235"
+  },
+  "film_camera": {
+    "description": "movie, filmmaking, filming, recording, motion, reel, cinema, cinematic, viewpoint",
+    "documentationLinks": [],
+    "id": "404:239"
+  },
+  "ellipsis_vertical": {
+    "description": "overflow, menu, options, more",
+    "documentationLinks": [],
+    "id": "404:240"
+  },
+  "ellipsis_horizontal": {
+    "description": "overflow, menu, options, more",
+    "documentationLinks": [],
+    "id": "404:242"
+  },
+  "curly_brackets": {
+    "description": "object, json, dictionary, braces",
+    "documentationLinks": [],
+    "id": "404:241"
+  },
+  "circle_half_filled": {
+    "description": "contrast, brightness, lightness, theme",
+    "documentationLinks": [],
+    "id": "404:232"
+  },
+  "box_wireframe": {
+    "description": "aabb, edges, bounding, cube, 3d, primitive, object, mesh, model",
+    "documentationLinks": [],
+    "id": "404:259"
+  },
+  "boolean": {
+    "description": "truthy, true, false, binary, no, yes, cross, check",
+    "documentationLinks": [],
+    "id": "404:220"
+  },
+  "arrow_zigzag": {
+    "description": "high, voltage, power, electricity, flash",
+    "documentationLinks": [],
+    "id": "404:236"
+  },
+  "arrow_axes_4d": {
+    "description": "coordinates, vector4, vec4, quaternion, x, y, z, w, dimensional, transform, axis",
+    "documentationLinks": [],
+    "id": "404:223"
+  },
+  "arrow_axes_2d_down": {
+    "description": "x, y, vector2, vec2, coordinates, position, location, dimensional, transform, axis",
+    "documentationLinks": [],
+    "id": "404:244"
+  },
+  "arrow_axes_2d": {
+    "description": "x, y, up, vector2, vec2, coordinates, position, location, dimensional, transform, axis",
+    "documentationLinks": [],
+    "id": "404:261"
+  },
+  "aperture": {
+    "description": "lens, exposure, shutter, snap, picture, photography",
+    "documentationLinks": [],
+    "id": "404:251"
   }
 }
