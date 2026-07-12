@@ -634,7 +634,6 @@ var selected_lang: String:
 @onready var icon_type_button: OptionButton = %TypePickerButton
 @onready var declaration_type_button: OptionButton = %DeclarationPickerButton
 @onready var scale_toggle: Button = %ScaleToggle
-@onready var search_bar: LineEdit = %SearchBar
 @onready var json_holder: Node = %JSON
 
 # Called when the node enters the scene tree for the first time.
@@ -674,13 +673,17 @@ func _ready() -> void:
 	icon_material_light.shader = icon_shader
 	icon_material_dark.shader = icon_shader
 	
+	var ticks := Time.get_ticks_usec()
 	_remove_all_children()
 	for _scale in [1.0, 2.0]:
 		icon_scale = _scale
 		_initialize_nodes()
 	update_icon_scale()
+	var took := Time.get_ticks_usec() - ticks
+	#prints(\"It took exactly\", took / 1_000_000.0, \"seconds to create all the buttons.\")
 	
 	get_editor_theme()
+	#update_preview_colors() # its called in get_editor_theme()
 	_update_from_editor_settings.call_deferred()
 
 
@@ -690,6 +693,7 @@ func _notification(what: int) -> void:
 			if is_node_ready(): # Otherwise it's called in _ready
 				get_editor_theme()
 
+@onready var search_bar: LineEdit = %SearchBar
 
 func update_icon_scale() -> void:
 	match scale_toggle.button_pressed:
@@ -697,6 +701,8 @@ func update_icon_scale() -> void:
 			icon_scale = 1.0
 		true:
 			icon_scale = 2.0
+			
+	#_initialize_nodes()
 	
 	search(search_bar.text)
 
@@ -909,17 +915,21 @@ func _update_editor_settings() -> void:
 func _update_from_editor_settings() -> void:
 	var settings := EditorInterface.get_editor_settings()
 	
-	icon_type_button.select(_get_items(icon_type_button, false).find(
-		settings.get_setting(SETTING_NAME_COLOR)
-	) + 1)
-	
-	declaration_type_button.select(_get_items(declaration_type_button, false).find(
-		settings.get_setting(SETTING_NAME_LANG)
-	) + 1)
-	
-	scale_toggle.button_pressed = settings.get_setting(SETTING_NAME_SCALE)
+	if settings.has_setting(SETTING_NAME_COLOR):
+		icon_type_button.select(_get_items(icon_type_button, false).find(
+			settings.get_setting(SETTING_NAME_COLOR)
+		) + 1)
+	if settings.has_setting(SETTING_NAME_LANG):
+		declaration_type_button.select(_get_items(declaration_type_button, false).find(
+			settings.get_setting(SETTING_NAME_LANG)
+		) + 1)
+	if settings.has_setting(SETTING_NAME_SCALE):
+		scale_toggle.button_pressed = settings.get_setting(SETTING_NAME_SCALE)
+	#print_debug(settings.get_setting(SETTING_NAME_SCALE))
 	
 	update_preview_colors()
+	_update_editor_settings() 
+	# If there's no settings, add them. Otherwise nothing changes.
 "
 
 [sub_resource type="Shader" id="Shader_8e00h"]
