@@ -7,3 +7,4 @@ icon.svg
 .editorconfig
 icon.svg.import
 docs/*.import
+@icons picker.html
