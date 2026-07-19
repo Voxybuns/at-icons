@@ -465,7 +465,7 @@
     "id": "223:362"
   },
   "recover": {
-    "description": "undo, time, rewind, counterclockwise, arrow",
+    "description": "undo, time, rewind, counterclockwise, arrow, history",
     "documentationLinks": [],
     "id": "223:187"
   },
@@ -1970,7 +1970,7 @@
     "id": "223:101"
   },
   "jigsaw_piece": {
-    "description": "puzzle, addon, plugin",
+    "description": "puzzle, addon, plugin, module, component",
     "documentationLinks": [],
     "id": "223:6"
   },
@@ -2789,6 +2789,11 @@
     "documentationLinks": [],
     "id": "404:237"
   },
+  "variable": {
+    "description": "component, value, mathematics, formula, brackets, parentheses",
+    "documentationLinks": [],
+    "id": "434:301"
+  },
   "tungsten_light": {
     "description": "incandescent, white, balance, lightbulb, warm",
     "documentationLinks": [],
@@ -2798,6 +2803,11 @@
     "description": "monitor, screen, display, widescreen, projection, watch",
     "documentationLinks": [],
     "id": "404:222"
+  },
+  "telescope": {
+    "description": "observe, distant, space, astronomy, lens, probe, explore",
+    "documentationLinks": [],
+    "id": "434:294"
   },
   "square_brackets": {
     "description": "array, enclose",
@@ -2828,6 +2838,11 @@
     "description": "thread, stitch, sting, sharp, poke, knitting, suture, crochet, embroidering, yarn",
     "documentationLinks": [],
     "id": "404:250"
+  },
+  "set_square": {
+    "description": "triangle, measurement, measuring, tool, right",
+    "documentationLinks": [],
+    "id": "434:297"
   },
   "selection_square": {
     "description": "marquee, rectangular, rectangle",
@@ -2870,7 +2885,7 @@
     "id": "409:68"
   },
   "person_body": {
-    "description": "human, stickman, man, woman, player, character, humanoid",
+    "description": "human, stickman, man, woman, player, character, humanoid, armature, rigging",
     "documentationLinks": [],
     "id": "404:224"
   },
@@ -2879,10 +2894,30 @@
     "documentationLinks": [],
     "id": "404:254"
   },
-  "node_graph": {
-    "description": "diagram, flowchart, shader, visual, programming, logic, wire, connections",
+  "node_graph_target": {
+    "description": "extremity, last, chain, child",
     "documentationLinks": [],
-    "id": "404:225"
+    "id": "434:299"
+  },
+  "node_graph_root": {
+    "description": "origin, chain, first, start, parent",
+    "documentationLinks": [],
+    "id": "434:298"
+  },
+  "node_graph_node": {
+    "description": "",
+    "documentationLinks": [],
+    "id": "434:296"
+  },
+  "node_graph_connection": {
+    "description": "wire",
+    "documentationLinks": [],
+    "id": "434:302"
+  },
+  "node_graph": {
+    "description": "chain, group, tree",
+    "documentationLinks": [],
+    "id": "434:300"
   },
   "movie_reel": {
     "description": "film, cinematography, motion, picture, filming, filmmaking, view, spool, project, frames",
@@ -2914,6 +2949,11 @@
     "documentationLinks": [],
     "id": "404:245"
   },
+  "lasso": {
+    "description": "selection, whip, freehand",
+    "documentationLinks": [],
+    "id": "434:292"
+  },
   "grid_perspective": {
     "description": "floor, vanishing, point, distance, ground, view, perspective",
     "documentationLinks": [],
@@ -2944,10 +2984,20 @@
     "documentationLinks": [],
     "id": "404:257"
   },
+  "function": {
+    "description": "formula, mathematics, method, routine",
+    "documentationLinks": [],
+    "id": "434:291"
+  },
   "fluorescent_light": {
     "description": "tube, white, balance, neon, cool, cold",
     "documentationLinks": [],
     "id": "404:234"
+  },
+  "flowchart": {
+    "description": "diagram, nodes, visual, scripting, shader, graph, network",
+    "documentationLinks": [],
+    "id": "404:225"
   },
   "floor_plane": {
     "description": "ground, solid, axis, up",
@@ -2964,6 +3014,11 @@
     "documentationLinks": [],
     "id": "404:239"
   },
+  "exposure": {
+    "description": "brightness, lightness, value, increment, decrement, iso",
+    "documentationLinks": [],
+    "id": "434:295"
+  },
   "ellipsis_vertical": {
     "description": "overflow, menu, options, more",
     "documentationLinks": [],
@@ -2974,15 +3029,30 @@
     "documentationLinks": [],
     "id": "404:242"
   },
+  "dumbbell": {
+    "description": "weights, lifting, strength, muscle, exercise, training, sports",
+    "documentationLinks": [],
+    "id": "433:52"
+  },
   "curly_brackets": {
     "description": "object, json, dictionary, braces",
     "documentationLinks": [],
     "id": "404:241"
   },
+  "circuit_board": {
+    "description": "electronics, pcb, printed, traces, contacts, copper, wafer",
+    "documentationLinks": [],
+    "id": "434:293"
+  },
   "circle_half_filled": {
     "description": "contrast, brightness, lightness, theme",
     "documentationLinks": [],
     "id": "404:232"
+  },
+  "cage": {
+    "description": "prison, jail, cell, locked, trapped, restrained",
+    "documentationLinks": [],
+    "id": "433:20"
   },
   "box_wireframe": {
     "description": "aabb, edges, bounding, cube, 3d, primitive, object, mesh, model",

@@ -5,6 +5,7 @@ type="CompressedTexture2D"
 uid="uid://ckj0irnq3dbeq"
 path="res://.godot/imported/ellipsis_horizontal.svg-4db823d0384b33abc72dbadf88d648ef.ctex"
 metadata={
+"has_editor_variant": true,
 "vram_texture": false
 }
 
@@ -39,5 +40,5 @@ process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
 svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false
+editor/scale_with_editor_scale=true
+editor/convert_colors_with_editor_theme=true

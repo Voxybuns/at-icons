@@ -5,6 +5,7 @@ type="CompressedTexture2D"
 uid="uid://f0n5v303bmb7"
 path="res://.godot/imported/security_camera.svg-3a527fe1d7ea12b5a31b0dc353988191.ctex"
 metadata={
+"has_editor_variant": true,
 "vram_texture": false
 }
 
@@ -39,5 +40,5 @@ process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
 svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false
+editor/scale_with_editor_scale=true
+editor/convert_colors_with_editor_theme=true
