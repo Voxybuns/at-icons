@@ -611,7 +611,7 @@ resource_name = "IconGrid"
 script/source = "@tool
 extends HFlowContainer
 
-const ICON_PREVIEW_WIDTH: int = 48
+const ICON_PREVIEW_WIDTH: int = 24
 const ICON_PREVIEW_HEIGHT: int = 24
 const ICON_PREVIEW_CORNER_RADIUS: int = 4
 const ICON_SIZE: Vector2 = Vector2(16, 16)
@@ -664,6 +664,8 @@ var _button_theme: Theme = Theme.new()
 var icon_material_light: ShaderMaterial = ShaderMaterial.new()
 var icon_material_dark: ShaderMaterial = ShaderMaterial.new()
 
+var icon_scale: float = 1.0
+
 var selected_type: String:
 	get:
 		return icon_type_button.get_item_text(
@@ -678,14 +680,37 @@ var selected_lang: String:
 
 @onready var icon_type_button: OptionButton = %TypePickerButton
 @onready var declaration_type_button: OptionButton = %DeclarationPickerButton
+@onready var scale_toggle: Button = %ScaleToggle
+@onready var search_bar: LineEdit = %SearchBar
 @onready var json_holder: Node = %JSON
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Make sure the color selector can send a signal to update the previews
+	# Icon type -> update colors
 	if icon_type_button and icon_type_button.item_selected.is_connected(update_preview_colors):
 		icon_type_button.item_selected.disconnect(update_preview_colors)
 	icon_type_button.item_selected.connect(update_preview_colors.unbind(1))
+	
+	# Scale toggle -> update scale
+	if scale_toggle and scale_toggle.toggled.is_connected(update_icon_scale):
+		scale_toggle.toggled.disconnect(update_icon_scale)
+	scale_toggle.toggled.connect(update_icon_scale.unbind(1))
+	
+	# Icon type -> editor settings
+	if icon_type_button and icon_type_button.item_selected.is_connected(_update_editor_settings):
+		icon_type_button.item_selected.disconnect(_update_editor_settings)
+	icon_type_button.item_selected.connect(_update_editor_settings.unbind(1))
+	
+	# Declaration type -> editor settings
+	if declaration_type_button and declaration_type_button.item_selected.is_connected(_update_editor_settings):
+		declaration_type_button.item_selected.disconnect(_update_editor_settings)
+	declaration_type_button.item_selected.connect(_update_editor_settings.unbind(1))
+	
+	# Scale toggle -> editor settings
+	if scale_toggle and scale_toggle.toggled.is_connected(_update_editor_settings):
+		scale_toggle.toggled.disconnect(_update_editor_settings)
+	scale_toggle.toggled.connect(_update_editor_settings.unbind(1))
 	
 	# Prevent an error from occuring should the picker scene be ran externally
 	if Engine.is_editor_hint():
@@ -696,137 +721,114 @@ func _ready() -> void:
 	icon_material_light.shader = icon_shader
 	icon_material_dark.shader = icon_shader
 	
-	var ticks := Time.get_ticks_usec()
-	_initialize_nodes()
-	var took := Time.get_ticks_usec() - ticks
-	#prints(\"It took exactly\", took / 1_000_000.0, \"seconds to create all the buttons.\")
-	update_preview_colors()
-
-
-func _update_button_theme() -> void:
-	_button_theme = Theme.new()
+	_remove_all_children()
+	for _scale in [1.0, 2.0]:
+		icon_scale = _scale
+		_initialize_nodes()
+	update_icon_scale()
 	
-	var button_clip_stylebox := StyleBoxFlat.new()
-	button_clip_stylebox.corner_radius_bottom_left = ICON_PREVIEW_CORNER_RADIUS
-	button_clip_stylebox.corner_radius_bottom_right = ICON_PREVIEW_CORNER_RADIUS
-	button_clip_stylebox.corner_radius_top_left = ICON_PREVIEW_CORNER_RADIUS
-	button_clip_stylebox.corner_radius_top_right = ICON_PREVIEW_CORNER_RADIUS
-	
-	for state in [\"normal\", \"hover\", \"pressed\", \"hover_pressed\"]:
-		_button_theme.set_stylebox(state, \"Button\", button_clip_stylebox)
+	get_editor_theme()
+	_update_from_editor_settings.call_deferred()
 
+
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_THEME_CHANGED:
+			if is_node_ready(): # Otherwise it's called in _ready
+				get_editor_theme()
+
+
+func update_icon_scale() -> void:
+	match scale_toggle.button_pressed:
+		false:
+			icon_scale = 1.0
+		true:
+			icon_scale = 2.0
+	
+	search(search_bar.text)
 
 func update_preview_colors() -> void:
 	icon_material_light.set_shader_parameter(
 		\"requested_color\",
-		COLORS[selected_type][\"light\"]
+		COLORS[selected_type][color_mode]
 	)
 	icon_material_dark.set_shader_parameter(
 		\"requested_color\",
-		COLORS[selected_type][\"dark\"]
+		COLORS[selected_type][color_mode]
 	)
 
 
-func _initialize_nodes() -> void:
-	_update_button_theme()
-	var dark_bg_style := StyleBoxFlat.new()
-	dark_bg_style.bg_color = COLORS[\"Preview\"][\"dark\"]
-	var light_bg_style := StyleBoxFlat.new()
-	light_bg_style.bg_color = COLORS[\"Preview\"][\"light\"]
+var color_mode := \"dark\"
+
+func get_editor_theme():
+	if not Engine.is_editor_hint():
+		return # its already set to dark
 	
-	_remove_all_children()
+	var settings := EditorInterface.get_editor_settings()
+	match settings.get_setting(\"interface/theme/icon_and_font_color\"):
+		0: # Auto
+			var col: Color = settings.get_setting(\"interface/theme/base_color\")
+			var lightness := col.ok_hsl_l
+			color_mode = \"light\" if lightness > 0.5 else \"dark\"
+		1: # Dark icons ->  light theme
+			color_mode = \"light\"
+		2: # Light icons -> dark theme
+			color_mode = \"dark\"
+	update_preview_colors()
+
+
+func _initialize_nodes() -> void:
+	#_remove_all_children()
 	
 	for texture in icons:
-			var button: Button = Button.new()
-			
-			button.clip_children = CanvasItem.CLIP_CHILDREN_ONLY
-			button.theme = _button_theme
-			button.custom_minimum_size = Vector2(
-				ICON_PREVIEW_WIDTH,
-				ICON_PREVIEW_HEIGHT
-			) * editor_scale
-			button.size = button.custom_minimum_size
-			button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-			button.tooltip_text = texture.resource_path.get_file() + \"\\nClick to copy this icon's declaration to your clipboard.\"
-			
-			
-			var hbox: HBoxContainer = HBoxContainer.new()
-			hbox.add_theme_constant_override(\"separation\", 0)
-			hbox.mouse_behavior_recursive = Control.MOUSE_BEHAVIOR_DISABLED
-			hbox.position = Vector2()
-			hbox.size = button.size
-			
-			
-			#region Dark theme icon preview
-			var panel_d: Panel = Panel.new()
-			panel_d.add_theme_stylebox_override(\"panel\", dark_bg_style)
-			panel_d.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			panel_d.size_flags_vertical = Control.SIZE_EXPAND_FILL
-			
-			var trect_d: TextureRect = TextureRect.new()
-			trect_d.texture = texture
-			trect_d.material = icon_material_dark
-			trect_d.custom_minimum_size = ICON_SIZE
-			trect_d.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-			trect_d.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		var button: Button = Button.new()
+		
+		button.custom_minimum_size = Vector2(
+			ICON_PREVIEW_WIDTH,
+			ICON_PREVIEW_HEIGHT
+		) * editor_scale * icon_scale
+		button.size = button.custom_minimum_size
+		button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		button.tooltip_text = texture.resource_path.get_file() + \\
+				\"\\nClick to copy this icon's declaration to your clipboard.\"
+		
+		var trect_d: TextureRect = TextureRect.new()
+		trect_d.texture = texture
+		trect_d.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		trect_d.material = icon_material_dark
+		trect_d.custom_minimum_size = ICON_SIZE
+		trect_d.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		trect_d.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 
-			panel_d.add_child(trect_d)
-			trect_d.anchor_bottom = 0.5
-			trect_d.offset_bottom = ICON_SIZE.y / 2 * editor_scale
-			trect_d.anchor_top = 0.5
-			trect_d.offset_top = ICON_SIZE.y / -2 * editor_scale
-			trect_d.anchor_right = 0.5
-			trect_d.offset_right = ICON_SIZE.x / 2 * editor_scale
-			trect_d.anchor_left = 0.5
-			trect_d.offset_left = ICON_SIZE.x / -2 * editor_scale
-			
-			hbox.add_child(panel_d)
-			
-			#endregion
-			
-			#region Light theme icon preview
-			var panel_l: Panel = Panel.new()
-			panel_l.add_theme_stylebox_override(\"panel\", light_bg_style)
-			panel_l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			panel_l.size_flags_vertical = Control.SIZE_EXPAND_FILL
-			
-			var trect_l: TextureRect = TextureRect.new()
-			trect_l.texture = texture
-			trect_l.material = icon_material_light
-			trect_l.custom_minimum_size = ICON_SIZE
-			trect_l.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-			trect_l.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-			
-			panel_l.add_child(trect_l)
-			trect_l.anchor_bottom = 0.5
-			trect_l.offset_bottom = ICON_SIZE.y / 2 * editor_scale
-			trect_l.anchor_top = 0.5
-			trect_l.offset_top = ICON_SIZE.y / -2 * editor_scale 
-			trect_l.anchor_right = 0.5
-			trect_l.offset_right = ICON_SIZE.x / 2 * editor_scale
-			trect_l.anchor_left = 0.5
-			trect_l.offset_left = ICON_SIZE.x / -2 * editor_scale
-			
-			hbox.add_child(panel_l)
-
-			#endregion
-			
-			button.add_child(hbox)
-			button.name = texture.resource_path.get_file().get_basename()
-			self.add_child(button)
-			
-			
-			button.pressed.connect(func():
-				copy_icon_to_clipboard(
-					texture.resource_path.replace(
-						\"node3d\", 
-						selected_type.to_lower()
-			)))
+		button.add_child(trect_d)
+		trect_d.anchor_bottom = 0.5
+		trect_d.offset_bottom = ICON_SIZE.y / 2 * editor_scale * icon_scale
+		trect_d.anchor_top = 0.5
+		trect_d.offset_top = ICON_SIZE.y / -2 * editor_scale * icon_scale
+		trect_d.anchor_right = 0.5
+		trect_d.offset_right = ICON_SIZE.x / 2 * editor_scale * icon_scale
+		trect_d.anchor_left = 0.5
+		trect_d.offset_left = ICON_SIZE.x / -2 * editor_scale * icon_scale
+		
+		#endregion
+		
+		button.set_meta(\"icon\", texture.resource_path.get_file().get_basename())
+		self.add_child(button)
+		button.set_meta(\"icon_scale\", icon_scale)
+		
+		
+		button.pressed.connect(func():
+			copy_icon_to_clipboard(
+				texture.resource_path.replace(
+					\"node3d\", 
+					selected_type.to_lower()
+		)))
 
 
 ## Might decrease lag.
 func _remove_all_children() -> void:
 	for child in get_children():
+		remove_child(child)
 		child.queue_free()
 
 
@@ -866,9 +868,9 @@ func copy_icon_to_clipboard(filepath: String) -> void:
 	
 	match selected_lang:
 		\"GDScript\":
-			string = \"@icon(\\\"%s\\\")\" % [filepath]
+			string = \"@icon(\\\"%s\\\")\\n\" % [filepath]
 		\"C#\":
-			string = \"[GlobalClass, Icon(\\\"%s\\\")]\" % [filepath]
+			string = \"[GlobalClass, Icon(\\\"%s\\\")]\\n\" % [filepath]
 	
 	DisplayServer.clipboard_set(string)
 	EditorInterface.get_editor_toaster().push_toast(\"Icon declaration copied to clipboard!\")
@@ -877,7 +879,7 @@ func copy_icon_to_clipboard(filepath: String) -> void:
 func search(text: String) -> void:
 	if not text: # No query:
 		for child in get_children():
-			child.show()
+			child.visible = child.get_meta(\"icon_scale\") == icon_scale
 		return
 	
 	text = text.replace(\" \", \"_\")
@@ -886,15 +888,88 @@ func search(text: String) -> void:
 	# There is a query
 	for child in get_children():
 		child.visible = false
+		if child.get_meta(\"icon_scale\") != icon_scale:
+			continue # It's hidden already
+		
 		var icon_aliases: Array
-		if child.name not in search_aliases:
-			icon_aliases = [child.name]
+		if child.get_meta(\"icon\") not in search_aliases:
+			icon_aliases = [child.get_meta(\"icon\")]
 		else:
-			icon_aliases = search_aliases[child.name]
+			icon_aliases = search_aliases[child.get_meta(\"icon\")]
 		for alias: String in icon_aliases:
 			if text in alias:
 				child.show()
 				break # if one alias has it, don't bother with the others
+
+
+func _get_items(option_button: OptionButton, exclude_first := true) -> Array[String]:
+	var array: Array[String]
+	for i in range(option_button.item_count):
+		if i == 0: continue
+		array.append(option_button.get_item_text(i))
+	return array
+
+
+const SETTING_NAME_COLOR := \"@icons/icon_color\"
+const SETTING_NAME_LANG := \"@icons/declaration_language\"
+const SETTING_NAME_SCALE := \"@icons/double_scale\"
+
+
+func _update_editor_settings() -> void:
+	var settings := EditorInterface.get_editor_settings()
+	
+	settings.set_setting(SETTING_NAME_COLOR, selected_type)
+	settings.set_setting(SETTING_NAME_LANG, selected_lang)
+	settings.set_setting(SETTING_NAME_SCALE, scale_toggle.button_pressed)
+	
+	#region setting info dicts
+	var setting_color := {
+		name = SETTING_NAME_COLOR,
+		type = TYPE_STRING,
+		hint = PROPERTY_HINT_ENUM,
+		hint_string = _get_items(icon_type_button).reduce((func(accum, next):
+			return accum + \",\" + next), icon_type_button.get_item_text(0)
+		)
+	}
+	
+	var setting_lang := {
+		name = SETTING_NAME_LANG,
+		type = TYPE_STRING,
+		hint = PROPERTY_HINT_ENUM,
+		hint_string = _get_items(declaration_type_button).reduce((func(accum, next):
+			return accum + \",\" + next), declaration_type_button.get_item_text(0)
+		)
+	}
+	
+	var setting_double_scale := {
+		name = SETTING_NAME_SCALE,
+		type = TYPE_BOOL,
+		hint = PROPERTY_HINT_NONE,
+		hint_string = \"\"
+	}
+	#endregion
+	
+	settings.add_property_info(setting_color)
+	settings.add_property_info(setting_lang)
+	settings.add_property_info(setting_double_scale)
+
+
+func _update_from_editor_settings() -> void:
+	var settings := EditorInterface.get_editor_settings()
+	
+	if settings.has_setting(SETTING_NAME_COLOR):
+		icon_type_button.select(_get_items(icon_type_button, false).find(
+			settings.get_setting(SETTING_NAME_COLOR)
+		) + 1)
+	if settings.has_setting(SETTING_NAME_LANG):
+		declaration_type_button.select(_get_items(declaration_type_button, false).find(
+			settings.get_setting(SETTING_NAME_LANG)
+		) + 1)
+	if settings.has_setting(SETTING_NAME_SCALE):
+		scale_toggle.button_pressed = settings.get_setting(SETTING_NAME_SCALE)
+	
+	update_preview_colors()
+	_update_editor_settings() # If there's no settings, add them. Otherwise nothing changes.
 "
 
 [sub_resource type="Shader" id="Shader_8e00h"]
@@ -957,7 +1032,7 @@ func _ready() -> void:
 	update_search_aliases()
 "
 
-[node name="At-Icons Picker" type="Control" unique_id=1278436117]
+[node name="AtIcons" type="Control" unique_id=1278436117]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -1024,7 +1099,21 @@ popup/item_0/id = 0
 popup/item_1/text = "C#"
 popup/item_1/id = 1
 
+[node name="Scale" type="HBoxContainer" parent="MainContainer/Options" unique_id=1810444556]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainContainer/Options/Scale" unique_id=370202035]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "2× Scale"
+
+[node name="ScaleToggle" type="CheckButton" parent="MainContainer/Options/Scale" unique_id=1498505067]
+unique_name_in_owner = true
+layout_mode = 2
+text = "On"
+
 [node name="SearchBar" type="LineEdit" parent="MainContainer" unique_id=568912931]
+unique_name_in_owner = true
 layout_mode = 2
 placeholder_text = "Search icons..."
 emoji_menu_enabled = false

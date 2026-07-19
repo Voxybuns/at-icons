@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2mfqn1wg6b7l"
-path="res://.godot/imported/torch.svg-388331366528b50a3349f0395610aa2d.ctex"
+uid="uid://waj7xnur1pa1"
+path="res://.godot/imported/arrow_counter_clockwise.svg-c81a7afef751e3fd2d99e24d4b56a50d.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/at-icons/node3d/torch.svg"
-dest_files=["res://.godot/imported/torch.svg-388331366528b50a3349f0395610aa2d.ctex"]
+source_file="res://addons/at-icons/node3d/arrow_counter_clockwise.svg"
+dest_files=["res://.godot/imported/arrow_counter_clockwise.svg-c81a7afef751e3fd2d99e24d4b56a50d.ctex"]
 
 [params]
 
