@@ -3088,5 +3088,95 @@
     "description": "lens, exposure, shutter, snap, picture, photography",
     "documentationLinks": [],
     "id": "404:251"
+  },
+  "spikes": {
+    "description": "trap, hazard, danger, kill, impale, death",
+    "documentationLinks": [],
+    "id": "491:187"
+  },
+  "shirt": {
+    "description": "top, equipment, clothing, tee, t-shirt",
+    "documentationLinks": [],
+    "id": "491:195"
+  },
+  "ring_with_gem": {
+    "description": "amulet, gemstone, nazar, warding, jewels, jewellery, precious",
+    "documentationLinks": [],
+    "id": "491:197"
+  },
+  "pendant": {
+    "description": "amulet, necklace, gemstone, nazar, warding, jewels, jewellery, precious",
+    "documentationLinks": [],
+    "id": "491:190"
+  },
+  "pants": {
+    "description": "trousers, pantaloons, clothing, equipment, leggings",
+    "documentationLinks": [],
+    "id": "491:186"
+  },
+  "magic_staff": {
+    "description": "weapon, cast, warlock, wizardry, magical, elemental, attack, fight, ranged",
+    "documentationLinks": [],
+    "id": "491:189"
+  },
+  "ingots": {
+    "description": "metals, iron, gold, bar, bullion, silver, steel, alloy, smithing, metalworking, blacksmithing, pile",
+    "documentationLinks": [],
+    "id": "491:211"
+  },
+  "ingot": {
+    "description": "metals, iron, gold, bar, bullion, silver, steel, alloy, smithing, metalworking, blacksmithing",
+    "documentationLinks": [],
+    "id": "494:17"
+  },
+  "gem_emerald": {
+    "description": "diamond, ruby, emerald, amethyst, valuable, item, treasure, pickup, collectible",
+    "documentationLinks": [],
+    "id": "491:191"
+  },
+  "faucet": {
+    "description": "tap, spigot, valve, water, flowing",
+    "documentationLinks": [],
+    "id": "491:247"
+  },
+  "drain": {
+    "description": "cover, manhole, grate, water, drainage, flow, removal, filter",
+    "documentationLinks": [],
+    "id": "491:267"
+  },
+  "boots": {
+    "description": "legwear, equipment, clothing, shoes, feet",
+    "documentationLinks": [],
+    "id": "491:226"
+  },
+  "battle_axe": {
+    "description": "weapon, tool, chop, cut, kill, blade, dual, double",
+    "documentationLinks": [],
+    "id": "491:188"
+  },
+  "armor_helmet": {
+    "description": "armet, bascinet, head, skull, cap, hat, equipment, protection",
+    "documentationLinks": [],
+    "id": "491:196"
+  },
+  "armor_chestplate": {
+    "description": "breastplate, plastron, torso, cuirass, equipment, protection",
+    "documentationLinks": [],
+    "id": "491:194"
+  },
+  "armor_boots": {
+    "description": "armour, greaves, sabatons, sollerets, legs, leggings, equipment, protection",
+    "documentationLinks": [],
+    "id": "491:192"
+  },
+  "anvil": {
+    "description": "smithing, repairing, metal, metalworking, blacksmithing, tool, utility, hammer, strike",
+    "documentationLinks": [],
+    "id": "491:193"
+  },
+  "alembic": {
+    "description": "brewing, distillation, potions, chemistry, alchemy, magic",
+    "documentationLinks": [],
+    "id": "491:185"
   }
 }
