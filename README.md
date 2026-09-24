@@ -13,7 +13,7 @@
 Each icon is designed on a 16×16 grid, with color variants corresponding to every node type. They're also configured to work with any editor theme and scaling settings out of the box!
 
 <p align=center>
-    <img alt="s of a sample Godot scene tree showing nodes with custom icons applied, with the interface set to a dark and light theme respectively." src="docs/preview.png">
+    <img alt="Two screenshots of a sample Godot scene tree showing nodes with custom icons applied, with the interface set to a dark and light theme respectively." src="docs/preview.png">
 </p>
 
 ## Installing
@@ -51,8 +51,13 @@ The plugin is bundled with an HTML picker (since v1.1.0) and an in-editor dock (
 
 ## Excluding icons from exports
 
-By default, exporting your Godot project into an executable will package every imported resource, regardless of whether 
+By default, all the icons contained in the plugin will get packaged when exporting your project to an executable. This may be undesirable, as under normal use, the icons are only seen in the editor and will not be actually visible in the exported project.
 
+To prevent that unnecessary bloat, you may want to [exclude the @icons addon resources from being exported.](https://docs.godotengine.org/en/stable/tutorials/export/exporting_projects.html#resource-options)
+
+Inside the Export menu, under the **Resources** tab, set the **Export Mode** to `Export all resources in the project except resources checked below`, and make sure the `addons/at-icons/` is checked to mark it as excluded.
+
+![Screenshot of the Export menu of the Godot Engine, displaying the required options to exclude the addon resources from being exported.](docs/exclude_from_export.png)
 ## Contributing
 
 Thank you for wanting to contribute to the project!
