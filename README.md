@@ -49,6 +49,10 @@ You might need to close and open the scene again for the icon change to occur.
 
 The plugin is bundled with an HTML picker (since v1.1.0) and an in-editor dock (since v1.3.0) to easily preview the icons and copy their respective declaration to the clipboard.
 
+## Excluding icons from exports
+
+By default, exporting your Godot project into an executable will package every imported resource, regardless of whether 
+
 ## Contributing
 
 Thank you for wanting to contribute to the project!
