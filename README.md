@@ -16,6 +16,12 @@ Each icon is designed on a 16×16 grid, with color variants corresponding to eve
     <img alt="Two screenshots of a sample Godot scene tree showing nodes with custom icons applied, with the interface set to a dark and light theme respectively." src="docs/preview.png">
 </p>
 
+> [!WARNING]
+> Due to a Godot Engine bug, icons do **not** get automatically rescaled or recolored if you change your editor's theme or scale.
+>
+> A [PR that fixes this bug](https://github.com/godotengine/godot/pull/117258) is currently open, but in the meantime, you will need to **reimport** all icons whenever you changed the aforementioned editor settings.
+
+
 ## Installing
 
 > [!CAUTION]
@@ -58,6 +64,7 @@ To prevent that unnecessary bloat, you may want to [exclude the @icons addon res
 Inside the Export menu, under the **Resources** tab, set the **Export Mode** to `Export all resources in the project except resources checked below`, and make sure the `addons/at-icons/` is checked to mark it as excluded.
 
 ![Screenshot of the Export menu of the Godot Engine, displaying the required options to exclude the addon resources from being exported.](docs/exclude_from_export.png)
+
 ## Contributing
 
 Thank you for wanting to contribute to the project!
