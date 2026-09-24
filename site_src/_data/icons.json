@@ -3129,6 +3129,26 @@
     "documentationLinks": [],
     "id": "494:17"
   },
+  "headphones_mute": {
+    "description": "listen, audio, music, sound, headset, earphones, muted, deafened",
+    "documentationLinks": [],
+    "id": "514:135"
+  },
+  "handset_waves": {
+    "description": "call, phone, communicate, communication, microphone, chat, speak, wave, audio, sound, signal",
+    "documentationLinks": [],
+    "id": "514:139"
+  },
+  "grabber_dots": {
+    "description": "dots, grabbable, draggable, widget",
+    "documentationLinks": [],
+    "id": "514:134"
+  },
+  "gif": {
+    "description": "animated, format, file, image",
+    "documentationLinks": [],
+    "id": "514:137"
+  },
   "gem_emerald": {
     "description": "diamond, ruby, emerald, amethyst, valuable, item, treasure, pickup, collectible",
     "documentationLinks": [],
@@ -3143,6 +3163,16 @@
     "description": "cover, manhole, grate, water, drainage, flow, removal, filter",
     "documentationLinks": [],
     "id": "491:267"
+  },
+  "dot_grid": {
+    "description": "apps, launcher, all, group, bundle, applications, home",
+    "documentationLinks": [],
+    "id": "514:136"
+  },
+  "controller": {
+    "description": "dpad, button, game, play, gaming, video, gamepad, peripheral",
+    "documentationLinks": [],
+    "id": "514:138"
   },
   "boots": {
     "description": "legwear, equipment, clothing, shoes, feet",
