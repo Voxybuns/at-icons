@@ -370,7 +370,7 @@
     "id": "223:284"
   },
   "signal_wave": {
-    "description": "radio, sound, audio, pulse, heartbeat, life",
+    "description": "radio, sound, audio, pulse, heartbeat, life, heartrate, frequency, amplitude",
     "documentationLinks": [],
     "id": "223:291"
   },
@@ -455,7 +455,7 @@
     "id": "223:269"
   },
   "reticle": {
-    "description": "aim, weapon, sights, look, combat, firearm, gun, target, crosshair, hud",
+    "description": "aim, weapon, sights, look, combat, firearm, gun, target, crosshair, hud, pivot, center, location, localization, localisation",
     "documentationLinks": [],
     "id": "223:264"
   },
@@ -1990,7 +1990,7 @@
     "id": "223:62"
   },
   "weight": {
-    "description": "density, mass, ton",
+    "description": "density, mass, ton, heavy, massive, lift",
     "documentationLinks": [],
     "id": "223:4"
   },
@@ -2910,7 +2910,7 @@
     "id": "434:296"
   },
   "node_graph_connection": {
-    "description": "wire",
+    "description": "wire, path, curve, spline",
     "documentationLinks": [],
     "id": "434:302"
   },
@@ -3208,5 +3208,320 @@
     "description": "brewing, distillation, potions, chemistry, alchemy, magic",
     "documentationLinks": [],
     "id": "491:185"
+  },
+  "waveform": {
+    "description": "audio, sound, signal, frequency, amplitude, spectrum",
+    "documentationLinks": [],
+    "id": "585:349"
+  },
+  "ufo": {
+    "description": "unidentified, flying, object, alien, space, spaceship, shuttle, saucer, extraterrestrial, et, beam, tractor, abduction, float",
+    "documentationLinks": [],
+    "id": "602:19"
+  },
+  "triangle_wave": {
+    "description": "audio, signal, voice, 8-bit, retro, chiptune, sample, music, sound, waveform",
+    "documentationLinks": [],
+    "id": "590:220"
+  },
+  "tortoise": {
+    "description": "slow, reptile, crawl, animal, pet, speed, sluggish, shell, turtle",
+    "documentationLinks": [],
+    "id": "585:345"
+  },
+  "toilet": {
+    "description": "wc, flush, flushing, sanitary, bathroom, restroom",
+    "documentationLinks": [],
+    "id": "559:470"
+  },
+  "stats": {
+    "description": "graph, statistics, bar, line, properties, data, metadata",
+    "documentationLinks": [],
+    "id": "585:342"
+  },
+  "square_wave": {
+    "description": "audio, signal, voice, 8-bit, retro, chiptune, sample, music, sound, waveform",
+    "documentationLinks": [],
+    "id": "590:213"
+  },
+  "spool": {
+    "description": "thread, sewing, knitting",
+    "documentationLinks": [],
+    "id": "555:362"
+  },
+  "snail": {
+    "description": "gastropod, animal, slow, sluggish, slimy, slime, sticky, crawl, shell, slowness, speed",
+    "documentationLinks": [],
+    "id": "559:454"
+  },
+  "slice": {
+    "description": "3d, modeling, tool, edges, faces, geometry, cut, chop, slicing, sliceable, sliced, cutting",
+    "documentationLinks": [],
+    "id": "555:353"
+  },
+  "sine_wave": {
+    "description": "audio, signal, voice, 8-bit, pcm, sample, music, sound, waveform, modulate",
+    "documentationLinks": [],
+    "id": "590:214"
+  },
+  "screen_shake": {
+    "description": "vibrate, vibration, shaking, motion, jiggle, wiggle, effect, vfx, dynamic, rotate, spin",
+    "documentationLinks": [],
+    "id": "585:348"
+  },
+  "sawtooth_wave": {
+    "description": "audio, signal, voice, 8-bit, retro, chiptune, sample, music, sound, waveform",
+    "documentationLinks": [],
+    "id": "590:212"
+  },
+  "saw": {
+    "description": "tool, cut, slice, cutting, weapon, sharp, blade, handsaw, woodcutting",
+    "documentationLinks": [],
+    "id": "585:350"
+  },
+  "sauropod": {
+    "description": "animal, dinosaur, tall, brachiosaurus, diplodocus, reptile, prehistorical, jurassic",
+    "documentationLinks": [],
+    "id": "585:344"
+  },
+  "rumble_phone": {
+    "description": "vibrate, vibration, haptics, shake, shaking, tremble",
+    "documentationLinks": [],
+    "id": "585:356"
+  },
+  "rumble_joypad": {
+    "description": "vibrate, vibration, haptics, shake, shaking, tremble",
+    "documentationLinks": [],
+    "id": "585:355"
+  },
+  "rumble": {
+    "description": "vibrate, vibration, haptics, shake, shaking, tremble",
+    "documentationLinks": [],
+    "id": "555:359"
+  },
+  "rabbit": {
+    "description": "animal, pet, fast, speed, run, hop, jump, leap",
+    "documentationLinks": [],
+    "id": "585:346"
+  },
+  "pottery_loop": {
+    "description": "scrape, sculpting, clay, brush, tool",
+    "documentationLinks": [],
+    "id": "555:344"
+  },
+  "plus_in_circle": {
+    "description": "add, addition, mathematics, operation, new, duplicate, calculation",
+    "documentationLinks": [],
+    "id": "555:341"
+  },
+  "pivot": {
+    "description": "center, reticle, marker, track, pinpoint, origin",
+    "documentationLinks": [],
+    "id": "555:363"
+  },
+  "person_walk": {
+    "description": "action, animation, pose, walking, movement, motion, locomotion, pace, step, gait",
+    "documentationLinks": [],
+    "id": "585:341"
+  },
+  "person_run": {
+    "description": "running, action, animation, movement, pose, motion, jogging, sprinting, speed, fast",
+    "documentationLinks": [],
+    "id": "555:99"
+  },
+  "person_plus": {
+    "description": "user, human, player, add, spawn, duplicate, new, friend",
+    "documentationLinks": [],
+    "id": "555:355"
+  },
+  "person_land": {
+    "description": "action, animation, pose, sneak, landing, platform, floor, fall, movement, locomotion, motion",
+    "documentationLinks": [],
+    "id": "585:343"
+  },
+  "person_jump": {
+    "description": "action, animation, pose, leap, spring, bounce, platform, land, movement, locomotion, motion",
+    "documentationLinks": [],
+    "id": "585:347"
+  },
+  "person_fall": {
+    "description": "action, animation, pose, movement, motion, locomotion, land, hazard, danger, slip, slide, danger, hurt",
+    "documentationLinks": [],
+    "id": "585:354"
+  },
+  "person_cross": {
+    "description": "user, person, player, remove, despawn, delete, cancel, unfriend, block",
+    "documentationLinks": [],
+    "id": "555:358"
+  },
+  "person": {
+    "description": "user, player, human, individual",
+    "documentationLinks": [],
+    "id": "555:365"
+  },
+  "people_plus": {
+    "description": "users, humans, players, add, group, spawn, duplicate, new, friends, lobby",
+    "documentationLinks": [],
+    "id": "555:361"
+  },
+  "people_cross": {
+    "description": "users, humans, players, remove, group, despawn, delete, block, friends, lobby",
+    "documentationLinks": [],
+    "id": "555:351"
+  },
+  "people": {
+    "description": "users, group, persons, players, lobby, friends",
+    "documentationLinks": [],
+    "id": "555:360"
+  },
+  "panda": {
+    "description": "bear, animal, ursine, endangered",
+    "documentationLinks": [],
+    "id": "585:351"
+  },
+  "noise_wave": {
+    "description": "audio, signal, voice, 8-bit, retro, chiptune, sample, music, sound, waveform",
+    "documentationLinks": [],
+    "id": "590:215"
+  },
+  "minus_in_square": {
+    "description": "mathematics, operation, remove, delete, subtract",
+    "documentationLinks": [],
+    "id": "555:376"
+  },
+  "minus_in_circle": {
+    "description": "mathematics, operation, remove, delete, subtract",
+    "documentationLinks": [],
+    "id": "555:340"
+  },
+  "mesh_ngon": {
+    "description": "polygons, geometry, 3d, modeling, vertex, vertices, edges, faces, free, draw",
+    "documentationLinks": [],
+    "id": "555:357"
+  },
+  "mesh_circle": {
+    "description": "geometry, 3d, modeling, vertex, vertices, edges, faces, curves, spline, loop",
+    "documentationLinks": [],
+    "id": "555:354"
+  },
+  "loop_cut": {
+    "description": "3d, modeling, tool, slice, edges, cutting, geometry",
+    "documentationLinks": [],
+    "id": "555:356"
+  },
+  "locate": {
+    "description": "marker, reticle, location, localization, localisation, pinpoint, place, spot, position, precise, precision",
+    "documentationLinks": [],
+    "id": "566:101"
+  },
+  "lighthouse": {
+    "description": "beacon, light, navigation, tower, landmark, help, aid, assistance",
+    "documentationLinks": [],
+    "id": "559:497"
+  },
+  "knife_cut": {
+    "description": "3d, modeling, tool, slice, edges, cutting, geometry",
+    "documentationLinks": [],
+    "id": "555:346"
+  },
+  "jellyfish": {
+    "description": "animal, creature, sea, soft, body, squishy, soft-body, simulation",
+    "documentationLinks": [],
+    "id": "555:350"
+  },
+  "inset": {
+    "description": "3d, modeling, tool, edges, faces, geometry, shrink",
+    "documentationLinks": [],
+    "id": "555:364"
+  },
+  "hair": {
+    "description": "strand, fur, simulation, particle, flow",
+    "documentationLinks": [],
+    "id": "566:99"
+  },
+  "gears": {
+    "description": "settings, mechanism, mechanical, cogs, teeth, parameters, options, configuration",
+    "documentationLinks": [],
+    "id": "585:352"
+  },
+  "frog": {
+    "description": "animal, amphibian, toad",
+    "documentationLinks": [],
+    "id": "555:348"
+  },
+  "flock": {
+    "description": "boids, birds, animals, group, flight",
+    "documentationLinks": [],
+    "id": "555:347"
+  },
+  "extrude": {
+    "description": "3d, modeling, tool, edges, faces, geometry, extend",
+    "documentationLinks": [],
+    "id": "555:352"
+  },
+  "drive_belt": {
+    "description": "motor, conveyor, motors, mechanical, mechanism, pulley, engine",
+    "documentationLinks": [],
+    "id": "566:100"
+  },
+  "dna": {
+    "description": "genes, genetics, strand, molecule, clone, ladder, double, helix, biology, science, life, evolution, simulate, simulation",
+    "documentationLinks": [],
+    "id": "558:414"
+  },
+  "directions": {
+    "description": "itinerary, road, sign, navigation, arrow, diamond, navigation, route, navigate, drive, driving",
+    "documentationLinks": [],
+    "id": "566:102"
+  },
+  "dinosaur": {
+    "description": "animal, dinosaur, tall, trex, t-rex, reptile, prehistorical, jurassic, danger, monster, hazard, enemy, teeth, bite",
+    "documentationLinks": [],
+    "id": "585:353"
+  },
+  "dialogue": {
+    "description": "",
+    "documentationLinks": [],
+    "id": "590:221"
+  },
+  "cross_in_circle": {
+    "description": "cancel, multiply, no, disagree, mathematics, calculation, multiplication, uncheck, close, operation",
+    "documentationLinks": [],
+    "id": "555:342"
+  },
+  "center": {
+    "description": "cursor, track, pivot, marker, pinpoint, origin",
+    "documentationLinks": [],
+    "id": "555:343"
+  },
+  "butterfly": {
+    "description": "animal, insect, wings, symmetry, mirror, symmetrical, fly, flight",
+    "documentationLinks": [],
+    "id": "555:345"
+  },
+  "boolean_union": {
+    "description": "pathfinder, operation, csg, sdf, add, or",
+    "documentationLinks": [],
+    "id": "590:218"
+  },
+  "boolean_subtract": {
+    "description": "pathfinder, operation, csg, sdf, cut, not, difference",
+    "documentationLinks": [],
+    "id": "590:219"
+  },
+  "boolean_intersect": {
+    "description": "pathfinder, operation, csg, sdf, multiply, and",
+    "documentationLinks": [],
+    "id": "590:216"
+  },
+  "boolean_exclude": {
+    "description": "pathfinder, operation, csg, sdf, divide, xor",
+    "documentationLinks": [],
+    "id": "590:217"
+  },
+  "bevel": {
+    "description": "3d, modeling, tool, chamfer, edges, faces, geometry, tapering",
+    "documentationLinks": [],
+    "id": "555:349"
   }
 }
